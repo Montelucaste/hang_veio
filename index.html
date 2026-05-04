@@ -201,32 +201,23 @@
             border-radius: 8px;
         }
 
-        /* Campo de entrada para o teclado nativo */
-        .hidden-input {
-            position: fixed;
-            top: -100px;
-            left: -100px;
-            opacity: 0;
-            width: 1px;
-            height: 1px;
-            pointer-events: none;
-        }
-
-        /* Botão para ativar o teclado (usado no celular) */
-        .activate-keyboard-btn {
-            background: rgba(0,0,0,0.5);
+        /* Botão para ativar o teclado */
+        .keyboard-activator {
+            background: rgba(0,0,0,0.6);
             color: yellow;
-            font-size: 0.7rem;
-            padding: 8px;
-            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 30px;
             text-align: center;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 8px;
             border: 1px solid yellow;
         }
 
-        .activate-keyboard-btn:active {
-            background: rgba(0,0,0,0.8);
+        .keyboard-activator:active {
+            background: rgba(0,0,0,0.9);
+            transform: scale(0.98);
         }
 
         footer {
@@ -241,6 +232,16 @@
             text-decoration: none;
         }
 
+        /* Esconde o input de verdade */
+        .hidden-input {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
         @media (max-width: 480px) {
             .score-overlay { padding: 8px 5px; gap: 10px; }
             .score-item { font-size: 0.55rem; }
@@ -249,12 +250,30 @@
             .timer-bar-bg { width: 18px; height: 80px; }
             .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; }
             .dica-box { font-size: 0.6rem; }
-            .activate-keyboard-btn { font-size: 0.6rem; padding: 6px; }
+            .keyboard-activator { font-size: 0.7rem; padding: 10px; }
         }
         
         @media (min-width: 700px) {
             .dica-box { font-size: 0.75rem; }
             .timer-bar-bg { height: 120px; }
+        }
+        
+        /* Estilo do boneco que cai - agora invisível até precisar */
+        #enforcado {
+            position: fixed;
+            top: -400px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            pointer-events: none;
+            transition: top 0.1s linear;
+            visibility: hidden;
+            opacity: 0.7;
+        }
+        
+        #enforcado img {
+            width: 80px;
+            height: auto;
         }
     </style>
 </head>
@@ -284,7 +303,7 @@
             <tr><td colspan="8"><img src="images/Forca__01.gif" width="126" height="54" name="a10" id="img_a10"></td><td colspan="4"><img src="images/Forca__02.gif" width="131" height="54" name="a9" id="img_a9" style="position: relative; left: -160px;"></td></tr>
             <tr><td rowspan="5"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11"></td><td colspan="2"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12"></td><td colspan="4"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="position: relative; left: -7px;"></td><td rowspan="2"><img src="images/Forca__06.gif" width="39" height="110"></td></tr>
             <tr><td colspan="3" rowspan="2"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="position: relative; left: 8px;"></td><td colspan="3"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2"></td></tr>
-            <tr><td colspan="2" rowspan="3"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="position: relative; left: 5px;"></td><td colspan="2" rowspan="2"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="position: relative; left: -35px;"></tr>
+            <tr><td colspan="2" rowspan="3"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="position: relative; left: 5px;"></td><td colspan="2" rowspan="2"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="position: relative; left: -35px;"></td></tr>
             <tr><td colspan="3" rowspan="3"><img src="images/Forca__11.gif" width="57" height="108"></td></tr>
             <tr><td colspan="2" rowspan="2"><img src="images/Forca__12.gif" width="68" height="74"></td></tr>
             <tr><td rowspan="3"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="position: relative; top: -3px;"></td><td colspan="2"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="position: relative; top: 2px;"></td></tr>
@@ -299,16 +318,17 @@
         <div class="tried-box"><input type="text" name="tried" id="triedInput" value="" readonly></div>
     </div>
     
-    <!-- Campo oculto para capturar o teclado nativo -->
-    <input type="text" id="hiddenInput" class="hidden-input" inputmode="text">
-    
     <!-- Botão para abrir o teclado nativo -->
-    <div class="activate-keyboard-btn" id="activateKeyboardBtn">📱 Tocar aqui para digitar</div>
+    <div class="keyboard-activator" id="keyboardActivatorBtn">📱 Toque aqui e digite uma letra</div>
+    
+    <!-- Campo oculto para capturar o teclado -->
+    <input type="text" id="hiddenInput" class="hidden-input" inputmode="text" autocomplete="off">
     
     <footer><a href="https://www.mkcomunicacoes.com/">Developed by MKComunicacoes.com</a></footer>
 </div>
 
-<div class="enforcado-fixed" id="enforcado"><img src="images/Enforcado.gif" width="80" height="160"></div>
+<!-- Boneco que cai - agora com id em vez de class -->
+<div id="enforcado"><img src="images/Enforcado.gif" width="80" height="160"></div>
 
 <script>
     // ==================== COLOQUE SEUS DADOS AQUI ====================
@@ -321,18 +341,22 @@
     
     const wordsRaw = [
         "",      // Índice 0 vazio
-        "EXEMPLO",  // Palavra 1
-        "TESTE",    // Palavra 2
-        "JOGO"      // Palavra 3
-        // Adicione mais palavras aqui
+        "EXEMPLO",
+        "TESTE",
+        "JOGO",
+        "FORCA",
+        "PROGRAMACAO"
+        // Adicione suas palavras aqui
     ];
     
     const questRaw = [
-        "",         // Índice 0 vazio
-        "Pergunta do EXEMPLO?",   // Pergunta 1
-        "Pergunta do TESTE?",     // Pergunta 2
-        "Pergunta do JOGO?"       // Pergunta 3
-        // Adicione mais perguntas aqui
+        "",      // Índice 0 vazio
+        "Esta é uma palavra de exemplo?",
+        "Palavra usada para verificar algo?",
+        "O que estamos fazendo aqui?",
+        "Como se chama este jogo?",
+        "O que você está fazendo?"
+        // Adicione suas perguntas aqui (mesma ordem das palavras)
     ];
     
     // ==================== FUNÇÕES DE ACENTUAÇÃO ====================
@@ -368,10 +392,21 @@
     const quest = corrigirArrayPerguntas(questRaw);
 
     // ==================== VARIÁVEIS DO JOGO ====================
-    let running = false, failnum = 0, second = 0, acabou = false, morreu = false, index = 1;
-    let alpha = ["$", "$"], alpha_index = 1, bravo = ["$", "$"], bravo_index = 1;
-    let timerInterval = null, topo = 250, speed = 5, niveltrans = 70, scrollAnimation = null;
-    let isWaitingForInput = false;
+    let running = false;
+    let failnum = 0;
+    let second = 0;
+    let acabou = false;
+    let morreu = false;
+    let index = 1;
+    let alpha = ["$", "$"];
+    let alpha_index = 1;
+    let bravo = ["$", "$"];
+    let bravo_index = 1;
+    let timerInterval = null;
+    let topo = 250;
+    let speed = 5;
+    let niveltrans = 70;
+    let scrollAnimation = null;
 
     // Elementos DOM
     const imgMap = {
@@ -392,7 +427,7 @@
     const enforcadoDiv = document.getElementById('enforcado');
     const startBtn = document.getElementById('startBtn');
     const hiddenInput = document.getElementById('hiddenInput');
-    const activateKeyboardBtn = document.getElementById('activateKeyboardBtn');
+    const keyboardActivatorBtn = document.getElementById('keyboardActivatorBtn');
 
     // ==================== FUNÇÕES DO JOGO ====================
     function scrollit() {
@@ -412,7 +447,10 @@
         }
     }
 
-    function stopTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = null; }
+    function stopTimer() { 
+        if (timerInterval) clearInterval(timerInterval); 
+        timerInterval = null; 
+    }
 
     function startTimer() {
         stopTimer();
@@ -438,7 +476,6 @@
                 scrollit();
                 running = false;
                 acabou = true;
-                isWaitingForInput = false;
             } else {
                 second++;
                 let percent = (second / 119) * 100;
@@ -456,22 +493,30 @@
             'o': /[õôóòö]/g, 'u': /[úûùü]/g, 'c': /[ç]/g
         };
         let normalizado = str;
-        for (let letra in acentos) { normalizado = normalizado.replace(acentos[letra], letra); }
+        for (let letra in acentos) { 
+            normalizado = normalizado.replace(acentos[letra], letra); 
+        }
         return normalizado;
     }
 
     function pick() {
-        let choice = "", blank = 0, currentWord = words[index];
+        let choice = "", blank = 0;
+        let currentWord = words[index];
         for (let i = 0; i < currentWord.length; i++) {
             let found = false;
             for (let j = 0; j <= alpha_index; j++) {
                 if (alpha[j] && (currentWord.charAt(i).toUpperCase() === alpha[j].toUpperCase() || 
                     normalizarAcento(currentWord.charAt(i)) === normalizarAcento(alpha[j]))) {
-                    found = true; break;
+                    found = true; 
+                    break;
                 }
             }
-            if (found) choice += currentWord.charAt(i) + " ";
-            else { choice += "_ "; blank = 1; }
+            if (found) {
+                choice += currentWord.charAt(i) + " ";
+            } else {
+                choice += "_ ";
+                blank = 1;
+            }
         }
         wordInput.value = choice.trim();
         if (!blank) {
@@ -494,18 +539,17 @@
             let newScore = parseInt(scoreInput.value) + 1;
             scoreInput.value = newScore;
             running = false;
-            isWaitingForInput = false;
         }
     }
 
     function processLetter(letter) {
         if (!running || acabou) return;
         
-        // Pega apenas a primeira letra, ignora o resto
+        // Pega apenas a primeira letra
         if (letter.length > 1) letter = letter.charAt(0);
         letter = letter.toUpperCase();
         
-        // Verifica se é letra válida (A-Z ou Ç ou Acentos)
+        // Verifica se é letra válida (A-Z ou Ç ou acentos)
         const letrasValidas = /^[A-ZÇÃÕÁÉÍÓÚ]$/i;
         if (!letrasValidas.test(letter)) return;
         
@@ -516,14 +560,16 @@
     }
 
     function new_word() {
-        if (running) { advise("Já tem uma palavra em jogo!"); return; }
+        if (running) { 
+            advise("Já tem uma palavra em jogo!"); 
+            return; 
+        }
         stopTimer();
         running = true;
         failnum = 0;
         livesInput.value = failnum;
         triedInput.value = "";
         wordInput.value = "";
-        isWaitingForInput = true;
         
         let numX = words.length - 1;
         if (numX < 1) {
@@ -533,8 +579,10 @@
         }
         index = Math.floor(1 + Math.random() * numX);
         dicaDiv.innerHTML = `<font face='Verdana' size='2' color='#FFFFFF'>${quest[index] || "Pergunta não encontrada"}</font>`;
-        alpha = ["$", "$"]; alpha_index = 1;
-        bravo = ["$", "$"]; bravo_index = 1;
+        alpha = ["$", "$"]; 
+        alpha_index = 1;
+        bravo = ["$", "$"]; 
+        bravo_index = 1;
 
         if (imgMap.a1) { imgMap.a1.src = "images/Forca__05.gif"; imgMap.a1.style.left = '-7px'; }
         if (imgMap.a2) imgMap.a2.src = "images/Forca__08.gif";
@@ -556,13 +604,6 @@
         scrollit();
         startTimer();
         pick();
-        
-        // Foca no campo oculto para abrir o teclado
-        setTimeout(() => {
-            if (running && !acabou) {
-                hiddenInput.focus();
-            }
-        }, 100);
     }
 
     function seek(letter) {
@@ -572,7 +613,8 @@
         let alreadyUsed = false;
         for (let i = 0; i <= bravo_index; i++) {
             if (bravo[i] && bravo[i].toUpperCase() === letter.toUpperCase()) { 
-                alreadyUsed = true; break; 
+                alreadyUsed = true; 
+                break; 
             }
         }
         
@@ -587,7 +629,8 @@
                 const currentChar = currentWord.charAt(i);
                 if (currentChar.toUpperCase() === letter.toUpperCase() ||
                     normalizarAcento(currentChar).toUpperCase() === normalizarAcento(letter).toUpperCase()) {
-                    found = true; break;
+                    found = true; 
+                    break;
                 }
             }
             
@@ -596,14 +639,48 @@
                 alpha[alpha_index] = letter;
             } else {
                 failnum++;
-                if (failnum == 1) { if(imgMap.a1) imgMap.a1.src = "images/Forca_05.gif"; if(imgMap.a2) imgMap.a2.src = "images/Forca_08.gif"; }
-                if (failnum == 2) { if(imgMap.a3) imgMap.a3.src = "images/Forca_09.gif"; }
-                if (failnum == 3) { if(imgMap.a4) imgMap.a4.src = "images/Forca_07.gif"; }
-                if (failnum == 4) { if(imgMap.a5) { imgMap.a5.src = "images/Forca_10.gif"; imgMap.a5.style.left = '-35px'; } }
-                if (failnum == 5) { if(imgMap.a6) { imgMap.a6.src = "images/Forca_14.gif"; imgMap.a6.style.top = '-4px'; } }
-                if (failnum == 6) { if(imgMap.a7) { imgMap.a7.src = "images/Forca_16.gif"; imgMap.a7.style.top = '-14px'; imgMap.a7.style.left = '3px'; } }
-                if (failnum == 7) { if(imgMap.a8) { imgMap.a8.src = "images/Forca_17.gif"; imgMap.a8.style.top = '-14px'; imgMap.a8.style.left = '3px'; } }
-                if (failnum == 8) { if(imgMap.a1) { imgMap.a1.src = "images/Forca_1_05.gif"; imgMap.a1.style.left = '-5px'; } }
+                if (failnum == 1) { 
+                    if(imgMap.a1) imgMap.a1.src = "images/Forca_05.gif"; 
+                    if(imgMap.a2) imgMap.a2.src = "images/Forca_08.gif"; 
+                }
+                if (failnum == 2) { 
+                    if(imgMap.a3) imgMap.a3.src = "images/Forca_09.gif"; 
+                }
+                if (failnum == 3) { 
+                    if(imgMap.a4) imgMap.a4.src = "images/Forca_07.gif"; 
+                }
+                if (failnum == 4) { 
+                    if(imgMap.a5) { 
+                        imgMap.a5.src = "images/Forca_10.gif"; 
+                        imgMap.a5.style.left = '-35px'; 
+                    } 
+                }
+                if (failnum == 5) { 
+                    if(imgMap.a6) { 
+                        imgMap.a6.src = "images/Forca_14.gif"; 
+                        imgMap.a6.style.top = '-4px'; 
+                    } 
+                }
+                if (failnum == 6) { 
+                    if(imgMap.a7) { 
+                        imgMap.a7.src = "images/Forca_16.gif"; 
+                        imgMap.a7.style.top = '-14px'; 
+                        imgMap.a7.style.left = '3px'; 
+                    } 
+                }
+                if (failnum == 7) { 
+                    if(imgMap.a8) { 
+                        imgMap.a8.src = "images/Forca_17.gif"; 
+                        imgMap.a8.style.top = '-14px'; 
+                        imgMap.a8.style.left = '3px'; 
+                    } 
+                }
+                if (failnum == 8) { 
+                    if(imgMap.a1) { 
+                        imgMap.a1.src = "images/Forca_1_05.gif"; 
+                        imgMap.a1.style.left = '-5px'; 
+                    } 
+                }
             }
             livesInput.value = failnum;
             if (failnum == 8) {
@@ -616,7 +693,6 @@
                 morreu = true;
                 scrollit();
                 running = false;
-                isWaitingForInput = false;
             } else {
                 pick();
             }
@@ -628,7 +704,9 @@
     function advise(msg) {
         let original = triedInput.value;
         triedInput.value = msg;
-        setTimeout(() => { if(triedInput.value === msg) triedInput.value = original; }, 1000);
+        setTimeout(() => { 
+            if(triedInput.value === msg) triedInput.value = original; 
+        }, 1000);
     }
 
     // ==================== EVENTOS DO TECLADO NATIVO ====================
@@ -642,24 +720,21 @@
     });
 
     hiddenInput.addEventListener('keydown', function(e) {
-        // Previne Enter de adicionar linha nova
         if (e.key === 'Enter') {
             e.preventDefault();
         }
     });
 
-    activateKeyboardBtn.addEventListener('click', function() {
+    keyboardActivatorBtn.addEventListener('click', function() {
         if (running && !acabou) {
             hiddenInput.focus();
+            // Mostra feedback visual
+            keyboardActivatorBtn.style.backgroundColor = "rgba(0,100,0,0.8)";
+            setTimeout(() => {
+                keyboardActivatorBtn.style.backgroundColor = "rgba(0,0,0,0.6)";
+            }, 200);
         } else {
-            advise("Clique em Iniciar primeiro!");
-        }
-    });
-
-    // Toque em qualquer lugar para focar (opcional)
-    document.body.addEventListener('touchstart', function(e) {
-        if (running && !acabou && e.target !== hiddenInput && !activateKeyboardBtn.contains(e.target)) {
-            // Não faz nada para não atrapalhar, mas mantém
+            advise("Clique em INICIAR primeiro!");
         }
     });
 
@@ -667,6 +742,12 @@
     startBtn.onclick = () => new_word();
     iTempo.style.height = "0%";
     enforcadoDiv.style.visibility = 'hidden';
+    
+    // Verificar se os arrays têm o mesmo tamanho
+    if (words.length !== quest.length) {
+        console.warn("ATENÇÃO: words e quest têm tamanhos diferentes!");
+        console.warn("words:", words.length, "quest:", quest.length);
+    }
 </script>
 </body>
 </html>
