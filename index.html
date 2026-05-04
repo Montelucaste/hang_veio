@@ -345,38 +345,49 @@
     const words = wordsRaw;
     const quest = corrigirArrayPerguntas(questRaw);
 
-    // ==================== FUNÇÕES DE ACENTUAÇÃO ====================
-   function corrigirAcentuacao(texto) {
-    if (!texto) return texto;
-    
-    // Primeiro, corrige as substituições específicas que você precisa
-    const substituicoes = {
-        ' S O ': ' SÃO ',
-        ' S O?': ' SÃO?',
-        ' A O': ' ÃO',
-        ' E O': ' ÃO',
-        'ACERT': 'ACERTOU',
-        'PARAB NS': 'PARABÉNS',
-        'VOC ': 'VOCÊ ',
-        ' NA O ': ' NÃO ',
-        'CORRE O': 'CORREÇÃO',
-        'A  O': 'AÇÃO',
-        'FRA O': 'FRAÇÃO',
-        'SELE O': 'SELEÇÃO'
-    };
-    
-    let corrigido = texto;
-    for (let [errado, certo] of Object.entries(substituicoes)) {
-        corrigido = corrigido.split(errado).join(certo);
+      // ==================== FUNÇÕES DE ACENTUAÇÃO ====================
+    function corrigirAcentuacao(texto) {
+        if (!texto) return texto;
+        
+        const substituicoes = {
+            ' S O ': ' SÃO ',
+            ' S O?': ' SÃO?',
+            ' A O': ' ÃO',
+            ' E O': ' ÃO',
+            'ACERT': 'ACERTOU',
+            'PARAB NS': 'PARABÉNS',
+            'VOC ': 'VOCÊ ',
+            ' NA O ': ' NÃO ',
+            'CORRE O': 'CORREÇÃO',
+            'A  O': 'AÇÃO',
+            'FRA O': 'FRAÇÃO',
+            'SELE O': 'SELEÇÃO'
+        };
+        
+        let corrigido = texto;
+        for (let [errado, certo] of Object.entries(substituicoes)) {
+            corrigido = corrigido.split(errado).join(certo);
+        }
+        
+        corrigido = corrigido.replace(/\bO\b/g, 'ÃO');
+        corrigido = corrigido.replace(/\bO\?/g, 'ÃO?');
+        
+        return corrigido;
     }
-    
-    // Corrige apenas o "O" isolado (com espaços ao redor)
-    // Isso NÃO vai afetar palavras como "ONDE" ou "ORIENTAÇÃO"
-    corrigido = corrigido.replace(/\bO\b/g, 'ÃO');
-    corrigido = corrigido.replace(/\bO\?/g, 'ÃO?');
-    
-    return corrigido;
-}
+
+    // ESTA FUNÇÃO ESTAVA FALTANDO!
+    function corrigirArrayPerguntas(arr) {
+        return arr.map(pergunta => corrigirAcentuacao(pergunta));
+    }
+
+    // ==================== DADOS DO JOGO ====================
+    // SEUS arrays wordsRaw e questRaw AQUI
+    const wordsRaw = ["","SEDE","DESPENSA", ...etc...];
+    const questRaw = ["","COMO SE DENOMINA...", ...etc...];
+
+    // ESTA LINHA É ESSENCIAL - CRIA O ARRAY quest CORRIGIDO!
+    const quest = corrigirArrayPerguntas(questRaw);
+    const words = wordsRaw;
 
     // ==================== VARIÁVEIS DO JOGO ====================
     let running = false, failnum = 0, second = 0, acabou = false, morreu = false, index = 1;
