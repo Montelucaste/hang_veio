@@ -33,7 +33,71 @@
             overflow-y: auto;
         }
 
-        /* Área da forca com posição relativa para o marcador interno */
+        /* Header com placar horizontal compacto */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 5px 12px;
+        }
+
+        .score-area {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: yellow;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .score-item span:first-child {
+            font-size: 1rem;
+        }
+
+        .score-item input {
+            background: transparent;
+            border: none;
+            color: yellow;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 35px;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        /* Timer horizontal compacto */
+        .timer-area {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .timer-bar-bg {
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .timer-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: yellow;
+            transition: width 0.1s linear;
+        }
+
+        /* Área da forca com posição relativa para o botão interno */
         .gallows-area {
             background: rgba(0,0,0,0.15);
             border-radius: 15px;
@@ -46,103 +110,27 @@
             margin-bottom: 8px;
         }
 
-        /* Marcador flutuante vertical dentro da área da forca (lado esquerdo) */
-        .score-overlay {
-            position: absolute;
-            left: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.65);
-            border-radius: 16px;
-            padding: 10px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            z-index: 10;
-            backdrop-filter: blur(4px);
-        }
-
-        .score-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            color: yellow;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        .score-item span:first-child {
-            font-size: 1.1rem;
-        }
-
-        .score-item input {
-            background: transparent;
-            border: none;
-            color: yellow;
-            font-size: 1.1rem;
-            font-weight: bold;
-            width: 40px;
-            text-align: center;
-            font-family: monospace;
-            padding: 0;
-        }
-
-        /* Timer vertical - altura total do homem */
-        .timer-vertical {
-            margin-top: 5px;
-        }
-
-        .timer-vertical span {
-            font-size: 0.7rem;
-            margin-bottom: 5px;
-        }
-
-        .timer-bar-bg {
-            width: 24px;
-            height: 120px;
-            background: rgba(255,255,255,0.25);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            margin-top: 5px;
-        }
-
-        .timer-bar-fill {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 0%;
-            background: yellow;
-            transition: height 0.1s linear;
-            border-radius: 12px;
-        }
-
-        /* Botão iniciar maior dentro da área da forca (lado direito) */
+        /* Botão iniciar dentro da área da forca (canto inferior direito) */
         .btn-start-overlay {
             position: absolute;
+            bottom: 8px;
             right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
             background: rgba(0,0,100,0.9);
             color: yellow;
-            font-size: 1rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            padding: 15px 10px;
+            padding: 6px 12px;
             border: 1px solid #00f;
             border-radius: 20px;
             cursor: pointer;
             transition: 0.2s;
             z-index: 10;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         .btn-start-overlay:active {
             background: darkblue;
-            transform: translateY(-50%) scale(0.97);
+            transform: scale(0.97);
         }
 
         .gallows-table {
@@ -214,7 +202,7 @@
             border-radius: 8px;
         }
 
-        /* Teclado no padrão QWERTY - 8 a 9 botões por linha */
+        /* Teclado no padrão QWERTY - 8 botões por linha */
         .keyboard {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -222,15 +210,10 @@
             margin-top: 6px;
         }
 
-        /* Forçar última linha com 3 botões a ter o mesmo tamanho */
-        .keyboard-row {
-            display: contents;
-        }
-
         .key-btn {
             background: blue;
             color: yellow;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             padding: 8px 0;
             border: 2px outset #00f;
@@ -248,7 +231,7 @@
         
         .key-btn.accent {
             background: darkblue;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         
         .key-btn.space {
@@ -286,31 +269,30 @@
 
         /* Ajustes para telas muito pequenas */
         @media (max-width: 480px) {
-            .score-overlay { padding: 8px 5px; gap: 10px; }
-            .score-item { font-size: 0.55rem; }
-            .score-item span:first-child { font-size: 0.85rem; }
-            .score-item input { font-size: 0.9rem; width: 30px; }
-            .timer-bar-bg { width: 18px; height: 100px; }
-            .btn-start-overlay { font-size: 0.8rem; padding: 12px 8px; }
-            .keyboard { gap: 4px; }
-            .key-btn { font-size: 0.75rem; padding: 6px 0; }
-            .key-btn.accent { font-size: 0.7rem; }
+            .score-item { font-size: 0.65rem; }
+            .score-item span:first-child { font-size: 0.8rem; }
+            .score-item input { font-size: 0.8rem; width: 28px; }
+            .timer-bar-bg { width: 60px; }
+            .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; bottom: 5px; right: 5px; }
+            .key-btn { font-size: 0.7rem; padding: 6px 0; }
+            .key-btn.accent { font-size: 0.65rem; }
+            .dica-box { font-size: 0.55rem; }
+            .word-box input { font-size: 0.85rem; }
         }
         
         /* Ajuste para tablets */
         @media (min-width: 700px) {
             .key-btn { font-size: 1rem; padding: 10px 0; }
             .dica-box { font-size: 0.75rem; }
-            .timer-bar-bg { height: 140px; }
+            .timer-bar-bg { width: 100px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <!-- Área da forca com marcador e botão flutuantes DENTRO dela -->
-    <div class="gallows-area">
-        <!-- Marcador flutuante vertical (lado esquerdo) -->
-        <div class="score-overlay">
+    <!-- Header com placar horizontal -->
+    <div class="game-header">
+        <div class="score-area">
             <div class="score-item">
                 <span>🏆</span>
                 <input type="text" name="score" id="scoreInput" value="0" readonly>
@@ -319,15 +301,20 @@
                 <span>💀</span>
                 <input type="text" name="lives" id="livesInput" value="0" readonly>
             </div>
-            <div class="score-item timer-vertical">
+            <div class="timer-area">
                 <span>⏱️</span>
                 <div class="timer-bar-bg">
                     <div id="iTempo" class="timer-bar-fill"></div>
                 </div>
             </div>
         </div>
-        
-        <!-- Botão Iniciar vertical (lado direito) -->
+        <!-- Espaço vazio para equilibrar (sem botão aqui) -->
+        <div style="width: 60px;"></div>
+    </div>
+
+    <!-- Área da forca com botão interno -->
+    <div class="gallows-area">
+        <!-- Botão Iniciar dentro da área da forca (canto inferior direito) -->
         <button class="btn-start-overlay" id="startBtn">▶ INICIAR</button>
         
         <!-- Tabela da forca (centralizada) -->
@@ -348,7 +335,7 @@
             <tr>
                 <td colspan="3" rowspan="2" style="width: 57px; height: 40px;"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="display: block; position: relative; left: 8px;"></td>
                 <td colspan="3" style="width: 92px; height: 16px;"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2" style="display: block;"></td>
-            </tr>
+            </table>
             <!-- LINHA 4 -->
             <tr>
                 <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 5px;"></td>
@@ -491,7 +478,7 @@
     function startTimer() {
         stopTimer();
         second = 0;
-        iTempo.style.height = "0%";
+        iTempo.style.width = "0%";
         timerInterval = setInterval(() => {
             if (acabou) {
                 stopTimer();
@@ -518,7 +505,7 @@
             } else {
                 second++;
                 let percent = (second / 119) * 100;
-                iTempo.style.height = percent + "%";
+                iTempo.style.width = percent + "%";
             }
         }, 1000);
     }
@@ -693,18 +680,16 @@
     }
 
     function buildKeyboard() {
-        // Layout QWERTY - 8 colunas
+        // Layout QWERTY organizado
         const rows = [
             ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ç'],
             ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
         ];
         
         keyboardDiv.innerHTML = '';
         
         // Primeira linha - 10 teclas
-        const row1 = document.createElement('div');
-        row1.style.display = 'contents';
         rows[0].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = 'key-btn';
@@ -713,17 +698,17 @@
             keyboardDiv.appendChild(btn);
         });
         
-        // Segunda linha - 9 teclas + acentos
+        // Segunda linha - 10 teclas (com Ç)
         rows[1].forEach(letra => {
             const btn = document.createElement('div');
-            btn.className = 'key-btn';
+            btn.className = letra === 'Ç' ? 'key-btn accent' : 'key-btn';
             btn.textContent = letra;
             btn.onclick = () => seek(letra);
             keyboardDiv.appendChild(btn);
         });
         
-        // Acentos na segunda linha (complemento)
-        const acentos = ['Ç', 'Ã', 'Õ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
+        // Acentos adicionais na segunda linha (depois do Ç)
+        const acentos = ['Ã', 'Õ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
         acentos.forEach(acento => {
             const btn = document.createElement('div');
             btn.className = 'key-btn accent';
@@ -732,7 +717,7 @@
             keyboardDiv.appendChild(btn);
         });
         
-        // Terceira linha - 7 letras + espaço (espaço ocupando 4 colunas)
+        // Terceira linha - 7 letras
         rows[2].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = 'key-btn';
@@ -741,7 +726,7 @@
             keyboardDiv.appendChild(btn);
         });
         
-        // Botão espaço
+        // Botão espaço ocupando as colunas restantes
         const spaceBtn = document.createElement('div');
         spaceBtn.className = 'key-btn space';
         spaceBtn.textContent = '␣';
@@ -750,14 +735,13 @@
         
         // Ajustar o grid para 8 colunas
         keyboardDiv.style.gridTemplateColumns = 'repeat(8, 1fr)';
-        keyboardDiv.style.gap = '5px';
     }
 
     startBtn.onclick = () => new_word();
     buildKeyboard();
 
-    // Timer vertical: iniciar com altura 0
-    iTempo.style.height = "0%";
+    // Timer horizontal: iniciar com largura 0
+    iTempo.style.width = "0%";
     
     // Estilo do boneco (centralizado)
     enforcadoDiv.style.visibility = 'hidden';
