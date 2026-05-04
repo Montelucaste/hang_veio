@@ -46,17 +46,19 @@
             margin-bottom: 8px;
         }
 
-        /* Marcador flutuante dentro da área da forca (canto superior direito) */
+        /* Marcador flutuante vertical dentro da área da forca (lado esquerdo) */
         .score-overlay {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 12px;
-            padding: 6px 10px;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.65);
+            border-radius: 16px;
+            padding: 10px 8px;
             display: flex;
-            flex-direction: row;
-            gap: 12px;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             z-index: 10;
             backdrop-filter: blur(4px);
         }
@@ -65,47 +67,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 3px;
             color: yellow;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: bold;
         }
 
         .score-item span:first-child {
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
 
         .score-item input {
             background: transparent;
             border: none;
             color: yellow;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            width: 35px;
+            width: 40px;
             text-align: center;
             font-family: monospace;
             padding: 0;
         }
 
-        /* Timer vertical (barra de progresso no sentido vertical) */
+        /* Timer vertical - altura total do homem */
         .timer-vertical {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
+            margin-top: 5px;
         }
 
         .timer-vertical span {
             font-size: 0.7rem;
+            margin-bottom: 5px;
         }
 
         .timer-bar-bg {
-            width: 20px;
-            height: 50px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 10px;
+            width: 24px;
+            height: 120px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
+            margin-top: 5px;
         }
 
         .timer-bar-fill {
@@ -115,7 +116,33 @@
             height: 0%;
             background: yellow;
             transition: height 0.1s linear;
-            border-radius: 10px;
+            border-radius: 12px;
+        }
+
+        /* Botão iniciar maior dentro da área da forca (lado direito) */
+        .btn-start-overlay {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,100,0.9);
+            color: yellow;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 15px 10px;
+            border: 1px solid #00f;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 2px;
+        }
+
+        .btn-start-overlay:active {
+            background: darkblue;
+            transform: translateY(-50%) scale(0.97);
         }
 
         .gallows-table {
@@ -139,28 +166,6 @@
             display: block;
             border: 0;
             margin: 0;
-        }
-
-        /* Botão iniciar dentro da área da forca (canto inferior direito) */
-        .btn-start-overlay {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(0,0,100,0.9);
-            color: yellow;
-            font-size: 0.65rem;
-            font-weight: bold;
-            padding: 5px 10px;
-            border: 1px solid #00f;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            z-index: 10;
-        }
-
-        .btn-start-overlay:active {
-            background: darkblue;
-            transform: scale(0.97);
         }
 
         .right-panel {
@@ -209,13 +214,17 @@
             border-radius: 8px;
         }
 
-        /* Teclado mais compacto - 2 a 3 linhas */
+        /* Teclado no padrão QWERTY - 8 a 9 botões por linha */
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(38px, 44px));
-            justify-content: center;
-            gap: 4px;
-            margin-top: 4px;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 5px;
+            margin-top: 6px;
+        }
+
+        /* Forçar última linha com 3 botões a ter o mesmo tamanho */
+        .keyboard-row {
+            display: contents;
         }
 
         .key-btn {
@@ -223,9 +232,9 @@
             color: yellow;
             font-size: 0.9rem;
             font-weight: bold;
-            padding: 4px 0;
+            padding: 8px 0;
             border: 2px outset #00f;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.1s;
             text-align: center;
@@ -244,6 +253,7 @@
         
         .key-btn.space {
             background: darkgreen;
+            grid-column: span 4;
         }
 
         /* Boneco que cai */
@@ -276,24 +286,22 @@
 
         /* Ajustes para telas muito pequenas */
         @media (max-width: 480px) {
-            .score-overlay { padding: 4px 8px; gap: 8px; }
+            .score-overlay { padding: 8px 5px; gap: 10px; }
             .score-item { font-size: 0.55rem; }
-            .score-item span:first-child { font-size: 0.75rem; }
-            .score-item input { font-size: 0.85rem; width: 28px; }
-            .timer-bar-bg { width: 16px; height: 40px; }
-            .btn-start-overlay { font-size: 0.55rem; padding: 4px 8px; }
-            .dica-box { font-size: 0.55rem; padding: 5px; }
-            .word-box input { font-size: 0.85rem; letter-spacing: 1px; }
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(34px, 40px)); gap: 3px; }
-            .key-btn { font-size: 0.8rem; padding: 3px 0; }
-            .key-btn.accent { font-size: 0.75rem; }
+            .score-item span:first-child { font-size: 0.85rem; }
+            .score-item input { font-size: 0.9rem; width: 30px; }
+            .timer-bar-bg { width: 18px; height: 100px; }
+            .btn-start-overlay { font-size: 0.8rem; padding: 12px 8px; }
+            .keyboard { gap: 4px; }
+            .key-btn { font-size: 0.75rem; padding: 6px 0; }
+            .key-btn.accent { font-size: 0.7rem; }
         }
         
         /* Ajuste para tablets */
         @media (min-width: 700px) {
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(50px, 58px)); }
-            .key-btn { font-size: 1rem; padding: 6px 0; }
+            .key-btn { font-size: 1rem; padding: 10px 0; }
             .dica-box { font-size: 0.75rem; }
+            .timer-bar-bg { height: 140px; }
         }
     </style>
 </head>
@@ -301,7 +309,7 @@
 <div class="game-container">
     <!-- Área da forca com marcador e botão flutuantes DENTRO dela -->
     <div class="gallows-area">
-        <!-- Marcador flutuante dentro da área da forca -->
+        <!-- Marcador flutuante vertical (lado esquerdo) -->
         <div class="score-overlay">
             <div class="score-item">
                 <span>🏆</span>
@@ -319,10 +327,10 @@
             </div>
         </div>
         
-        <!-- Botão Iniciar dentro da área da forca -->
+        <!-- Botão Iniciar vertical (lado direito) -->
         <button class="btn-start-overlay" id="startBtn">▶ INICIAR</button>
         
-        <!-- Tabela da forca (centralizada, sem sidebar) -->
+        <!-- Tabela da forca (centralizada) -->
         <table class="gallows-table" border="0" cellpadding="0" cellspacing="0">
             <!-- LINHA 1: TOPO DA FORCA -->
             <tr>
@@ -685,9 +693,19 @@
     }
 
     function buildKeyboard() {
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-        keyboardDiv.innerHTML = "";
-        letters.forEach(letra => {
+        // Layout QWERTY - 8 colunas
+        const rows = [
+            ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+            ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+        ];
+        
+        keyboardDiv.innerHTML = '';
+        
+        // Primeira linha - 10 teclas
+        const row1 = document.createElement('div');
+        row1.style.display = 'contents';
+        rows[0].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = 'key-btn';
             btn.textContent = letra;
@@ -695,6 +713,16 @@
             keyboardDiv.appendChild(btn);
         });
         
+        // Segunda linha - 9 teclas + acentos
+        rows[1].forEach(letra => {
+            const btn = document.createElement('div');
+            btn.className = 'key-btn';
+            btn.textContent = letra;
+            btn.onclick = () => seek(letra);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Acentos na segunda linha (complemento)
         const acentos = ['Ç', 'Ã', 'Õ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
         acentos.forEach(acento => {
             const btn = document.createElement('div');
@@ -704,11 +732,25 @@
             keyboardDiv.appendChild(btn);
         });
         
+        // Terceira linha - 7 letras + espaço (espaço ocupando 4 colunas)
+        rows[2].forEach(letra => {
+            const btn = document.createElement('div');
+            btn.className = 'key-btn';
+            btn.textContent = letra;
+            btn.onclick = () => seek(letra);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Botão espaço
         const spaceBtn = document.createElement('div');
         spaceBtn.className = 'key-btn space';
         spaceBtn.textContent = '␣';
         spaceBtn.onclick = () => seek(' ');
         keyboardDiv.appendChild(spaceBtn);
+        
+        // Ajustar o grid para 8 colunas
+        keyboardDiv.style.gridTemplateColumns = 'repeat(8, 1fr)';
+        keyboardDiv.style.gap = '5px';
     }
 
     startBtn.onclick = () => new_word();
