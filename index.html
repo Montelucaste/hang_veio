@@ -12,7 +12,7 @@
 
         body {
             margin: 0;
-            padding: 6px;
+            padding: 8px;
             background-color: #FF6600;
             font-family: 'Verdana', 'Segoe UI', sans-serif;
             min-height: 100vh;
@@ -33,71 +33,7 @@
             overflow-y: auto;
         }
 
-        /* Header com placar horizontal compacto */
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 5px 12px;
-        }
-
-        .score-area {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .score-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: yellow;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .score-item span:first-child {
-            font-size: 1rem;
-        }
-
-        .score-item input {
-            background: transparent;
-            border: none;
-            color: yellow;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 35px;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        /* Timer horizontal compacto */
-        .timer-area {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .timer-bar-bg {
-            width: 80px;
-            height: 6px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .timer-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: yellow;
-            transition: width 0.1s linear;
-        }
-
-        /* Área da forca com posição relativa para o botão interno */
+        /* Área da forca com posição relativa para o marcador interno */
         .gallows-area {
             background: rgba(0,0,0,0.15);
             border-radius: 15px;
@@ -110,11 +46,84 @@
             margin-bottom: 8px;
         }
 
-        /* Botão iniciar dentro da área da forca (canto inferior direito) */
+        /* Marcador flutuante vertical dentro da área da forca (lado direito) */
+        .score-overlay {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.65);
+            border-radius: 16px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: yellow;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .score-item span:first-child {
+            font-size: 1.1rem;
+        }
+
+        .score-item input {
+            background: transparent;
+            border: none;
+            color: yellow;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 40px;
+            text-align: center;
+            font-family: monospace;
+            padding: 0;
+        }
+
+        /* Timer vertical */
+        .timer-vertical {
+            margin-top: 5px;
+        }
+
+        .timer-vertical span {
+            font-size: 0.7rem;
+            margin-bottom: 5px;
+        }
+
+        .timer-bar-bg {
+            width: 24px;
+            height: 100px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .timer-bar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: yellow;
+            transition: height 0.1s linear;
+            border-radius: 12px;
+        }
+
+        /* Botão iniciar horizontal dentro da área da forca (canto inferior esquerdo) */
         .btn-start-overlay {
             position: absolute;
             bottom: 8px;
-            right: 8px;
+            left: 8px;
             background: rgba(0,0,100,0.9);
             color: yellow;
             font-size: 0.7rem;
@@ -163,13 +172,12 @@
             margin-bottom: 6px;
         }
 
-        /* Pergunta com fonte menor */
         .dica-box {
             background: #ff884d;
             padding: 6px;
             border-radius: 10px;
             text-align: center;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: bold;
             color: white;
             word-break: break-word;
@@ -202,7 +210,7 @@
             border-radius: 8px;
         }
 
-        /* Teclado no padrão QWERTY - 8 botões por linha */
+        /* Teclado QWERTY */
         .keyboard {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -267,32 +275,31 @@
             text-decoration: none;
         }
 
-        /* Ajustes para telas muito pequenas */
         @media (max-width: 480px) {
-            .score-item { font-size: 0.65rem; }
-            .score-item span:first-child { font-size: 0.8rem; }
-            .score-item input { font-size: 0.8rem; width: 28px; }
-            .timer-bar-bg { width: 60px; }
-            .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; bottom: 5px; right: 5px; }
+            .score-overlay { padding: 8px 5px; gap: 10px; }
+            .score-item { font-size: 0.55rem; }
+            .score-item span:first-child { font-size: 0.85rem; }
+            .score-item input { font-size: 0.9rem; width: 30px; }
+            .timer-bar-bg { width: 18px; height: 80px; }
+            .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; bottom: 5px; left: 5px; }
             .key-btn { font-size: 0.7rem; padding: 6px 0; }
             .key-btn.accent { font-size: 0.65rem; }
-            .dica-box { font-size: 0.55rem; }
-            .word-box input { font-size: 0.85rem; }
+            .dica-box { font-size: 0.6rem; }
         }
         
-        /* Ajuste para tablets */
         @media (min-width: 700px) {
             .key-btn { font-size: 1rem; padding: 10px 0; }
             .dica-box { font-size: 0.75rem; }
-            .timer-bar-bg { width: 100px; }
+            .timer-bar-bg { height: 120px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <!-- Header com placar horizontal -->
-    <div class="game-header">
-        <div class="score-area">
+    <!-- Área da forca com marcador e botão flutuantes DENTRO dela -->
+    <div class="gallows-area">
+        <!-- Marcador flutuante vertical (lado direito) -->
+        <div class="score-overlay">
             <div class="score-item">
                 <span>🏆</span>
                 <input type="text" name="score" id="scoreInput" value="0" readonly>
@@ -301,70 +308,28 @@
                 <span>💀</span>
                 <input type="text" name="lives" id="livesInput" value="0" readonly>
             </div>
-            <div class="timer-area">
+            <div class="score-item timer-vertical">
                 <span>⏱️</span>
                 <div class="timer-bar-bg">
                     <div id="iTempo" class="timer-bar-fill"></div>
                 </div>
             </div>
         </div>
-        <!-- Espaço vazio para equilibrar (sem botão aqui) -->
-        <div style="width: 60px;"></div>
-    </div>
-
-    <!-- Área da forca com botão interno -->
-    <div class="gallows-area">
-        <!-- Botão Iniciar dentro da área da forca (canto inferior direito) -->
+        
+        <!-- Botão Iniciar horizontal (canto inferior esquerdo) -->
         <button class="btn-start-overlay" id="startBtn">▶ INICIAR</button>
         
-        <!-- Tabela da forca (centralizada) -->
+        <!-- TABELA DA FORCA - IMAGENS DO HOMEM -->
         <table class="gallows-table" border="0" cellpadding="0" cellspacing="0">
-            <!-- LINHA 1: TOPO DA FORCA -->
-            <tr>
-                <td colspan="8" style="width: 126px;"><img src="images/Forca__01.gif" width="126" height="54" name="a10" id="img_a10" style="display: block;"></td>
-                <td colspan="4" style="width: 131px;"><img src="images/Forca__02.gif" width="131" height="54" name="a9" id="img_a9" style="display: block; position: relative; left: -160px;"></td>
-            </tr>
-            <!-- LINHA 2 -->
-            <tr>
-                <td rowspan="5" style="width: 69px; height: 192px;"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11" style="display: block;"></td>
-                <td colspan="2" style="width: 48px; height: 94px;"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12" style="display: block;"></td>
-                <td colspan="4" style="width: 101px; height: 94px;"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="display: block; position: relative; left: -7px;"></td>
-                <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__06.gif" width="39" height="110" style="display: block;"></td>
-            </tr>
-            <!-- LINHA 3 -->
-            <tr>
-                <td colspan="3" rowspan="2" style="width: 57px; height: 40px;"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="display: block; position: relative; left: 8px;"></td>
-                <td colspan="3" style="width: 92px; height: 16px;"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2" style="display: block;"></td>
-            </table>
-            <!-- LINHA 4 -->
-            <tr>
-                <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 5px;"></td>
-                <td colspan="2" rowspan="2" style="width: 68px; height: 58px;"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="display: block; position: relative; left: -35px;"></td>
-            </tr>
-            <!-- LINHA 5 -->
-            <tr>
-                <td colspan="3" rowspan="3" style="width: 57px; height: 108px;"><img src="images/Forca__11.gif" width="57" height="108" style="display: block;"></td>
-            </tr>
-            <!-- LINHA 6 -->
-            <tr>
-                <td colspan="2" rowspan="2" style="width: 68px; height: 74px;"><img src="images/Forca__12.gif" width="68" height="74" style="display: block;"></td>
-            </tr>
-            <!-- LINHA 7 - CORPO (Forca_14) -->
-            <tr>
-                <td rowspan="3" style="width: 69px; height: 160px;"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="display: block; position: relative; top: -3px;"></td>
-                <td colspan="2" style="width: 63px; height: 50px;"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="display: block; position: relative; top: 2px;"></td>
-            </tr>
-            <!-- LINHA 8 - PERNAS -->
-            <tr>
-                <td rowspan="2" style="width: 23px; height: 110px;"><img src="images/Forca__15.gif" width="23" height="110" style="display: block;"></td>
-                <td colspan="3" style="width: 68px; height: 91px;"><img src="images/Forca__16.gif" width="68" height="91" name="a7" id="img_a7" style="display: block; position: relative; top: -14px; left: 3px;"></td>
-                <td colspan="2" style="width: 58px; height: 91px;"><img src="images/Forca__17.gif" width="58" height="91" name="a8" id="img_a8" style="display: block; position: relative; top: -14px; left: 3px;"></td>
-                <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__18.gif" width="39" height="110" style="display: block;"></td>
-            </tr>
-            <!-- LINHA 9 -->
-            <tr>
-                <td colspan="5" style="width: 126px; height: 19px;"><img src="images/Forca__19.gif" width="126" height="19" style="display: block;"></td>
-            </tr>
+            <tr><td colspan="8"><img src="images/Forca__01.gif" width="126" height="54" name="a10" id="img_a10"></td><td colspan="4"><img src="images/Forca__02.gif" width="131" height="54" name="a9" id="img_a9" style="position: relative; left: -160px;"></td></tr>
+            <tr><td rowspan="5"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11"></td><td colspan="2"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12"></td><td colspan="4"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="position: relative; left: -7px;"></td><td rowspan="2"><img src="images/Forca__06.gif" width="39" height="110"></td></tr>
+            <tr><td colspan="3" rowspan="2"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="position: relative; left: 8px;"></td><td colspan="3"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2"></td></tr>
+            <tr><td colspan="2" rowspan="3"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="position: relative; left: 5px;"></td><td colspan="2" rowspan="2"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="position: relative; left: -35px;"></td></tr>
+            <tr><td colspan="3" rowspan="3"><img src="images/Forca__11.gif" width="57" height="108"></td></tr>
+            <tr><td colspan="2" rowspan="2"><img src="images/Forca__12.gif" width="68" height="74"></td></tr>
+            <tr><td rowspan="3"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="position: relative; top: -3px;"></td><td colspan="2"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="position: relative; top: 2px;"></td></tr>
+            <tr><td rowspan="2"><img src="images/Forca__15.gif" width="23" height="110"></td><td colspan="3"><img src="images/Forca__16.gif" width="68" height="91" name="a7" id="img_a7" style="position: relative; top: -14px; left: 3px;"></td><td colspan="2"><img src="images/Forca__17.gif" width="58" height="91" name="a8" id="img_a8" style="position: relative; top: -14px; left: 3px;"></td><td rowspan="2"><img src="images/Forca__18.gif" width="39" height="110"></td></tr>
+            <tr><td colspan="5"><img src="images/Forca__19.gif" width="126" height="19"></td></tr>
         </table>
     </div>
 
@@ -510,6 +475,98 @@
         }, 1000);
     }
 
+   function corrigirAcentuacao(texto) {
+        if (!texto) return texto;
+        const substituicoes = {
+            'S O': 'SÃO', 'A O': 'ÃO', 'E O': 'ÃO', ' S O ': ' SÃO ', ' S O?': ' SÃO?',
+            'NA O': 'NÃO', 'CORRE O': 'CORREÇÃO', 'A  O': 'AÇÃO', 'FRA O': 'FRAÇÃO', 'SELE O': 'SELEÇÃO'
+        };
+        let corrigido = texto;
+        for (let [errado, certo] of Object.entries(substituicoes)) {
+            corrigido = corrigido.split(errado).join(certo);
+        }
+        corrigido = corrigido.replace(/([A-Z]) O/g, '$1ÃO');
+        corrigido = corrigido.replace(/([A-Z]) O\?/g, '$1ÃO?');
+        return corrigido;
+    }
+
+    function corrigirArrayPerguntas(arr) {
+        return arr.map(pergunta => corrigirAcentuacao(pergunta));
+    }
+
+    const words = wordsRaw;
+    const quest = corrigirArrayPerguntas(questRaw);
+
+    // Variáveis do jogo
+    let running = false, failnum = 0, second = 0, acabou = false, morreu = false, index = 1;
+    let alpha = ["$", "$"], alpha_index = 1, bravo = ["$", "$"], bravo_index = 1;
+    let timerInterval = null, topo = 250, speed = 5, niveltrans = 70, scrollAnimation = null;
+
+    // Elementos DOM
+    const imgMap = {
+        a1: document.getElementById('img_a1'), a2: document.getElementById('img_a2'), a3: document.getElementById('img_a3'),
+        a4: document.getElementById('img_a4'), a5: document.getElementById('img_a5'), a6: document.getElementById('img_a6'),
+        a7: document.getElementById('img_a7'), a8: document.getElementById('img_a8'), a9: document.getElementById('img_a9'),
+        a10: document.getElementById('img_a10'), a11: document.getElementById('img_a11'), a12: document.getElementById('img_a12'),
+        a13: document.getElementById('img_a13')
+    };
+    const scoreInput = document.getElementById('scoreInput'), livesInput = document.getElementById('livesInput');
+    const wordInput = document.getElementById('wordInput'), triedInput = document.getElementById('triedInput');
+    const dicaDiv = document.getElementById('dica'), iTempo = document.getElementById('iTempo');
+    const enforcadoDiv = document.getElementById('enforcado'), startBtn = document.getElementById('startBtn');
+    const keyboardDiv = document.getElementById('keyboard');
+
+    function scrollit() {
+        if (scrollAnimation) clearTimeout(scrollAnimation);
+        if (morreu) {
+            if (topo <= -337) return;
+            let velo = topo - speed;
+            enforcadoDiv.style.visibility = "visible";
+            enforcadoDiv.style.top = velo + "px";
+            enforcadoDiv.style.opacity = niveltrans / 100;
+            topo = velo;
+            scrollAnimation = setTimeout(scrollit, 100);
+        } else {
+            topo = 250;
+            enforcadoDiv.style.visibility = "hidden";
+            enforcadoDiv.style.top = "300px";
+        }
+    }
+
+    function stopTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = null; }
+
+    function startTimer() {
+        stopTimer();
+        second = 0;
+        iTempo.style.height = "0%";
+        timerInterval = setInterval(() => {
+            if (acabou) { stopTimer(); return; }
+            if (second >= 120) {
+                stopTimer();
+                if (imgMap.a1) { imgMap.a1.src = "images/Forca_1_05.gif"; imgMap.a1.style.left = '-5px'; }
+                if (imgMap.a2) imgMap.a2.src = "images/Forca_08.gif";
+                if (imgMap.a3) imgMap.a3.src = "images/Forca_09.gif";
+                if (imgMap.a4) imgMap.a4.src = "images/Forca_07.gif";
+                if (imgMap.a5) { imgMap.a5.src = "images/Forca_10.gif"; imgMap.a5.style.left = '-35px'; }
+                if (imgMap.a6) { imgMap.a6.src = "images/Forca_14.gif"; imgMap.a6.style.top = '-4px'; }
+                if (imgMap.a7) { imgMap.a7.src = "images/Forca_16.gif"; imgMap.a7.style.top = '-14px'; imgMap.a7.style.left = '3px'; }
+                if (imgMap.a8) { imgMap.a8.src = "images/Forca_17.gif"; imgMap.a8.style.top = '-14px'; imgMap.a8.style.left = '3px'; }
+                triedInput.value = "Seu tempo acabou! Clique em Iniciar";
+                wordInput.value = words[index];
+                let newScore = parseInt(scoreInput.value) - 1;
+                scoreInput.value = newScore;
+                morreu = true;
+                scrollit();
+                running = false;
+                acabou = true;
+            } else {
+                second++;
+                let percent = (second / 119) * 100;
+                iTempo.style.height = percent + "%";
+            }
+        }, 1000);
+    }
+
     function normalizarAcento(str) {
         if (!str) return '';
         const acentos = {
@@ -517,31 +574,22 @@
             'C': /[Ç]/g, 'a': /[ãâáàä]/g, 'e': /[êéèë]/g, 'i': /[íîìï]/g, 'o': /[õôóòö]/g, 'u': /[úûùü]/g, 'c': /[ç]/g
         };
         let normalizado = str;
-        for (let letra in acentos) {
-            normalizado = normalizado.replace(acentos[letra], letra);
-        }
+        for (let letra in acentos) { normalizado = normalizado.replace(acentos[letra], letra); }
         return normalizado;
     }
 
     function pick() {
-        let choice = "";
-        let blank = 0;
-        let currentWord = words[index];
+        let choice = "", blank = 0, currentWord = words[index];
         for (let i = 0; i < currentWord.length; i++) {
             let found = false;
             for (let j = 0; j <= alpha_index; j++) {
                 if (alpha[j] && (currentWord.charAt(i).toUpperCase() === alpha[j].toUpperCase() || 
                     normalizarAcento(currentWord.charAt(i)) === normalizarAcento(alpha[j]))) {
-                    found = true;
-                    break;
+                    found = true; break;
                 }
             }
-            if (found) {
-                choice += currentWord.charAt(i) + " ";
-            } else {
-                choice += "_ ";
-                blank = 1;
-            }
+            if (found) choice += currentWord.charAt(i) + " ";
+            else { choice += "_ "; blank = 1; }
         }
         wordInput.value = choice.trim();
         if (!blank) {
@@ -568,10 +616,7 @@
     }
 
     function new_word() {
-        if (running) {
-            advise("Já tem uma palavra em jogo!");
-            return;
-        }
+        if (running) { advise("Já tem uma palavra em jogo!"); return; }
         stopTimer();
         running = true;
         failnum = 0;
@@ -581,12 +626,9 @@
         let numX = words.length - 1;
         index = Math.floor(1 + Math.random() * numX);
         dicaDiv.innerHTML = `<font face='Verdana' size='2' color='#FFFFFF'>${quest[index]}</font>`;
-        alpha = ["$", "$"];
-        alpha_index = 1;
-        bravo = ["$", "$"];
-        bravo_index = 1;
+        alpha = ["$", "$"]; alpha_index = 1;
+        bravo = ["$", "$"]; bravo_index = 1;
 
-        // Reset das imagens
         if (imgMap.a1) { imgMap.a1.src = "images/Forca__05.gif"; imgMap.a1.style.left = '-7px'; }
         if (imgMap.a2) imgMap.a2.src = "images/Forca__08.gif";
         if (imgMap.a3) { imgMap.a3.src = "images/Forca__09.gif"; imgMap.a3.style.left = '5px'; }
@@ -610,36 +652,25 @@
     }
 
     function seek(letter) {
-        if (!running) {
-            advise("Clique em Iniciar");
-            return;
-        }
+        if (!running) { advise("Clique em Iniciar"); return; }
         if (acabou) return;
-        
         let alreadyUsed = false;
         for (let i = 0; i <= bravo_index; i++) {
-            if (bravo[i] && bravo[i].toUpperCase() === letter.toUpperCase()) { 
-                alreadyUsed = true; 
-                break; 
-            }
+            if (bravo[i] && bravo[i].toUpperCase() === letter.toUpperCase()) { alreadyUsed = true; break; }
         }
-        
         if (!alreadyUsed) {
             triedInput.value += letter + " ";
             bravo_index++;
             bravo[bravo_index] = letter;
-            
             let found = false;
             let currentWord = words[index];
             for (let i = 0; i < currentWord.length; i++) {
                 const currentChar = currentWord.charAt(i);
                 if (currentChar.toUpperCase() === letter.toUpperCase() ||
                     normalizarAcento(currentChar).toUpperCase() === normalizarAcento(letter).toUpperCase()) {
-                    found = true;
-                    break;
+                    found = true; break;
                 }
             }
-            
             if (found) {
                 alpha_index++;
                 alpha[alpha_index] = letter;
@@ -680,16 +711,12 @@
     }
 
     function buildKeyboard() {
-        // Layout QWERTY organizado
         const rows = [
             ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
             ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ç'],
             ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
         ];
-        
         keyboardDiv.innerHTML = '';
-        
-        // Primeira linha - 10 teclas
         rows[0].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = 'key-btn';
@@ -697,8 +724,6 @@
             btn.onclick = () => seek(letra);
             keyboardDiv.appendChild(btn);
         });
-        
-        // Segunda linha - 10 teclas (com Ç)
         rows[1].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = letra === 'Ç' ? 'key-btn accent' : 'key-btn';
@@ -706,8 +731,6 @@
             btn.onclick = () => seek(letra);
             keyboardDiv.appendChild(btn);
         });
-        
-        // Acentos adicionais na segunda linha (depois do Ç)
         const acentos = ['Ã', 'Õ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
         acentos.forEach(acento => {
             const btn = document.createElement('div');
@@ -716,8 +739,6 @@
             btn.onclick = () => seek(acento);
             keyboardDiv.appendChild(btn);
         });
-        
-        // Terceira linha - 7 letras
         rows[2].forEach(letra => {
             const btn = document.createElement('div');
             btn.className = 'key-btn';
@@ -725,25 +746,17 @@
             btn.onclick = () => seek(letra);
             keyboardDiv.appendChild(btn);
         });
-        
-        // Botão espaço ocupando as colunas restantes
         const spaceBtn = document.createElement('div');
         spaceBtn.className = 'key-btn space';
         spaceBtn.textContent = '␣';
         spaceBtn.onclick = () => seek(' ');
         keyboardDiv.appendChild(spaceBtn);
-        
-        // Ajustar o grid para 8 colunas
         keyboardDiv.style.gridTemplateColumns = 'repeat(8, 1fr)';
     }
 
     startBtn.onclick = () => new_word();
     buildKeyboard();
-
-    // Timer horizontal: iniciar com largura 0
-    iTempo.style.width = "0%";
-    
-    // Estilo do boneco (centralizado)
+    iTempo.style.height = "0%";
     enforcadoDiv.style.visibility = 'hidden';
 </script>
 </body>
