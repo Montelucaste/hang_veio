@@ -33,15 +33,15 @@
             overflow-y: auto;
         }
 
-        /* Header compacto */
+        /* Header compacto - botão ao lado do marcador */
         .game-header {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
             margin-bottom: 10px;
             padding: 0 5px;
+            flex-wrap: nowrap;
         }
 
         .score-area {
@@ -51,18 +51,19 @@
             text-align: center;
             font-weight: bold;
             color: yellow;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             display: flex;
-            gap: 15px;
+            gap: 12px;
+            flex-shrink: 0;
         }
 
         .score-area input {
             background: transparent;
             border: none;
             color: yellow;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
-            width: 40px;
+            width: 35px;
             text-align: center;
             font-family: monospace;
         }
@@ -70,9 +71,10 @@
         .timer-area {
             background: yellow;
             border-radius: 10px;
-            height: 8px;
-            width: 120px;
+            height: 6px;
+            width: 100px;
             overflow: hidden;
+            align-self: center;
         }
 
         .timer-fill {
@@ -81,17 +83,19 @@
             background: black;
         }
 
-        /* Botão iniciar discreto */
+        /* Botão iniciar ao lado - menor e discreto */
         .btn-start {
             background: rgba(0,0,100,0.8);
             color: yellow;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border: 1px solid #00f;
             border-radius: 20px;
             cursor: pointer;
             transition: 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .btn-start:active {
@@ -103,14 +107,14 @@
         .main-panel {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .gallows-area {
             background: rgba(0,0,0,0.1);
             border-radius: 15px;
-            padding: 10px;
+            padding: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -143,18 +147,20 @@
         .right-panel {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
+        /* Pergunta com fonte menor */
         .dica-box {
             background: #ff884d;
-            padding: 10px;
-            border-radius: 15px;
+            padding: 8px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-weight: bold;
             color: white;
             word-break: break-word;
+            line-height: 1.3;
         }
 
         .word-box input {
@@ -162,12 +168,12 @@
             background: rgba(0,0,0,0.2);
             border: none;
             color: yellow;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font-family: monospace;
-            padding: 8px;
+            padding: 6px;
             border-radius: 10px;
         }
 
@@ -176,29 +182,30 @@
             background: rgba(255,255,255,0.3);
             border: none;
             color: darkgreen;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: bold;
             text-align: center;
-            padding: 6px;
+            padding: 5px;
             border-radius: 10px;
         }
 
+        /* Teclado com teclas menores para caber mais na linha */
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(55px, 65px));
+            grid-template-columns: repeat(auto-fit, minmax(42px, 50px));
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             margin-top: 5px;
         }
 
         .key-btn {
             background: blue;
             color: yellow;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            padding: 8px 0;
+            padding: 5px 0;
             border: 2px outset #00f;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.1s;
             text-align: center;
@@ -212,6 +219,7 @@
         
         .key-btn.accent {
             background: darkblue;
+            font-size: 1rem;
         }
         
         .key-btn.space {
@@ -230,14 +238,14 @@
         }
         
         #enforcado img {
-            width: 100px;
+            width: 90px;
             height: auto;
         }
 
         footer {
             text-align: center;
-            margin-top: 10px;
-            font-size: 0.6rem;
+            margin-top: 8px;
+            font-size: 0.55rem;
             color: #990000;
         }
         
@@ -248,13 +256,23 @@
 
         /* Ajustes para telas muito pequenas */
         @media (max-width: 500px) {
-            .score-area { font-size: 0.7rem; padding: 4px 8px; }
-            .score-area input { font-size: 1rem; width: 35px; }
-            .dica-box { font-size: 0.75rem; padding: 8px; }
-            .word-box input { font-size: 1rem; letter-spacing: 2px; }
-            .key-btn { font-size: 1.2rem; padding: 6px 0; min-width: 50px; }
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(48px, 58px)); gap: 4px; }
-            .gallows-area { padding: 5px; }
+            .score-area { font-size: 0.65rem; padding: 4px 8px; gap: 8px; }
+            .score-area input { font-size: 0.85rem; width: 30px; }
+            .timer-area { width: 70px; }
+            .btn-start { font-size: 0.65rem; padding: 3px 8px; }
+            .dica-box { font-size: 0.65rem; padding: 6px; }
+            .word-box input { font-size: 0.9rem; letter-spacing: 1px; }
+            .keyboard { grid-template-columns: repeat(auto-fit, minmax(38px, 45px)); gap: 4px; }
+            .key-btn { font-size: 0.95rem; padding: 4px 0; }
+            .key-btn.accent { font-size: 0.85rem; }
+            .gallows-area { padding: 4px; }
+        }
+        
+        /* Ajuste para telas maiores (tablets) */
+        @media (min-width: 700px) {
+            .keyboard { grid-template-columns: repeat(auto-fit, minmax(55px, 65px)); }
+            .key-btn { font-size: 1.2rem; padding: 8px 0; }
+            .dica-box { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -535,7 +553,7 @@
         wordInput.value = "";
         let numX = words.length - 1;
         index = Math.floor(1 + Math.random() * numX);
-        dicaDiv.innerHTML = `<font face='Verdana' size='4' color='#FFFFFF'>${quest[index]}</font>`;
+        dicaDiv.innerHTML = `<font face='Verdana' size='3' color='#FFFFFF'>${quest[index]}</font>`;
         alpha = ["$", "$"];
         alpha_index = 1;
         bravo = ["$", "$"];
