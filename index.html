@@ -12,7 +12,7 @@
 
         body {
             margin: 0;
-            padding: 8px;
+            padding: 6px;
             background-color: #FF6600;
             font-family: 'Verdana', 'Segoe UI', sans-serif;
             min-height: 100vh;
@@ -22,56 +22,43 @@
         }
 
         .game-container {
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
             background-color: #FF6600;
-            border-radius: 20px;
-            padding: 8px;
+            border-radius: 15px;
+            padding: 6px;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
         }
 
-        /* Layout da forca com sidebar à direita */
-        .gallows-wrapper {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-            align-items: flex-start;
-        }
-
+        /* Área da forca com posição relativa para o marcador interno */
         .gallows-area {
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.15);
             border-radius: 15px;
             padding: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: auto;
-            flex: 2;
+            position: relative;
+            margin-bottom: 8px;
         }
 
-        /* Sidebar ao lado da forca */
-        .forca-sidebar {
-            flex: 0.8;
+        /* Marcador flutuante dentro da área da forca (canto superior direito) */
+        .score-overlay {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 12px;
+            padding: 6px 10px;
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* Marcador vertical ao lado da forca */
-        .score-area {
-            background: rgba(0,0,0,0.3);
-            padding: 8px 6px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: bold;
-            color: yellow;
-            font-size: 0.7rem;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-direction: row;
+            gap: 12px;
+            z-index: 10;
+            backdrop-filter: blur(4px);
         }
 
         .score-item {
@@ -79,56 +66,56 @@
             flex-direction: column;
             align-items: center;
             gap: 2px;
+            color: yellow;
+            font-size: 0.65rem;
+            font-weight: bold;
         }
 
         .score-item span:first-child {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
-        .score-area input {
+        .score-item input {
             background: transparent;
             border: none;
             color: yellow;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             width: 35px;
             text-align: center;
             font-family: monospace;
+            padding: 0;
         }
 
-        .timer-area {
-            background: yellow;
-            border-radius: 10px;
-            height: 6px;
-            width: 100%;
-            overflow: hidden;
-            margin-top: 2px;
+        /* Timer vertical (barra de progresso no sentido vertical) */
+        .timer-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
         }
 
-        .timer-fill {
-            width: 0%;
-            height: 100%;
-            background: black;
-        }
-
-        /* Botão iniciar na sidebar */
-        .btn-start {
-            background: rgba(0,0,100,0.8);
-            color: yellow;
+        .timer-vertical span {
             font-size: 0.7rem;
-            font-weight: bold;
-            padding: 8px 6px;
-            border: 1px solid #00f;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
-            width: 100%;
         }
 
-        .btn-start:active {
-            background: darkblue;
-            transform: scale(0.97);
+        .timer-bar-bg {
+            width: 20px;
+            height: 50px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timer-bar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: yellow;
+            transition: height 0.1s linear;
+            border-radius: 10px;
         }
 
         .gallows-table {
@@ -154,20 +141,42 @@
             margin: 0;
         }
 
+        /* Botão iniciar dentro da área da forca (canto inferior direito) */
+        .btn-start-overlay {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,100,0.9);
+            color: yellow;
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border: 1px solid #00f;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .btn-start-overlay:active {
+            background: darkblue;
+            transform: scale(0.97);
+        }
+
         .right-panel {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 8px;
+            gap: 5px;
+            margin-bottom: 6px;
         }
 
         /* Pergunta com fonte menor */
         .dica-box {
             background: #ff884d;
-            padding: 8px;
-            border-radius: 12px;
+            padding: 6px;
+            border-radius: 10px;
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: bold;
             color: white;
             word-break: break-word;
@@ -179,13 +188,13 @@
             background: rgba(0,0,0,0.2);
             border: none;
             color: yellow;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
             letter-spacing: 2px;
             font-family: monospace;
-            padding: 6px;
-            border-radius: 10px;
+            padding: 5px;
+            border-radius: 8px;
         }
 
         .tried-box input {
@@ -193,30 +202,30 @@
             background: rgba(255,255,255,0.3);
             border: none;
             color: darkgreen;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: bold;
             text-align: center;
-            padding: 5px;
-            border-radius: 10px;
+            padding: 4px;
+            border-radius: 8px;
         }
 
-        /* Teclado mais compacto - 2 linhas */
+        /* Teclado mais compacto - 2 a 3 linhas */
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(42px, 50px));
+            grid-template-columns: repeat(auto-fit, minmax(38px, 44px));
             justify-content: center;
-            gap: 5px;
-            margin-top: 5px;
+            gap: 4px;
+            margin-top: 4px;
         }
 
         .key-btn {
             background: blue;
             color: yellow;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: bold;
-            padding: 5px 0;
+            padding: 4px 0;
             border: 2px outset #00f;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.1s;
             text-align: center;
@@ -230,7 +239,7 @@
         
         .key-btn.accent {
             background: darkblue;
-            font-size: 1rem;
+            font-size: 0.85rem;
         }
         
         .key-btn.space {
@@ -238,7 +247,7 @@
         }
 
         /* Boneco que cai */
-        #enforcado {
+        .enforcado-fixed {
             position: fixed;
             top: -400px;
             left: 50%;
@@ -248,15 +257,15 @@
             transition: top 0.1s linear;
         }
         
-        #enforcado img {
-            width: 90px;
+        .enforcado-fixed img {
+            width: 80px;
             height: auto;
         }
 
         footer {
             text-align: center;
-            margin-top: 8px;
-            font-size: 0.55rem;
+            margin-top: 6px;
+            font-size: 0.5rem;
             color: #990000;
         }
         
@@ -266,105 +275,102 @@
         }
 
         /* Ajustes para telas muito pequenas */
-        @media (max-width: 500px) {
-            .score-area { font-size: 0.6rem; padding: 6px 4px; }
-            .score-item span:first-child { font-size: 0.85rem; }
-            .score-area input { font-size: 0.9rem; width: 28px; }
-            .btn-start { font-size: 0.6rem; padding: 6px 4px; }
-            .dica-box { font-size: 0.65rem; padding: 6px; }
-            .word-box input { font-size: 0.9rem; letter-spacing: 1px; }
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(38px, 45px)); gap: 4px; }
-            .key-btn { font-size: 0.95rem; padding: 4px 0; }
-            .key-btn.accent { font-size: 0.85rem; }
-            .gallows-area { padding: 4px; }
-            .forca-sidebar { flex: 1; }
+        @media (max-width: 480px) {
+            .score-overlay { padding: 4px 8px; gap: 8px; }
+            .score-item { font-size: 0.55rem; }
+            .score-item span:first-child { font-size: 0.75rem; }
+            .score-item input { font-size: 0.85rem; width: 28px; }
+            .timer-bar-bg { width: 16px; height: 40px; }
+            .btn-start-overlay { font-size: 0.55rem; padding: 4px 8px; }
+            .dica-box { font-size: 0.55rem; padding: 5px; }
+            .word-box input { font-size: 0.85rem; letter-spacing: 1px; }
+            .keyboard { grid-template-columns: repeat(auto-fit, minmax(34px, 40px)); gap: 3px; }
+            .key-btn { font-size: 0.8rem; padding: 3px 0; }
+            .key-btn.accent { font-size: 0.75rem; }
         }
         
-        /* Ajuste para telas maiores (tablets) */
+        /* Ajuste para tablets */
         @media (min-width: 700px) {
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(55px, 65px)); }
-            .key-btn { font-size: 1.2rem; padding: 8px 0; }
-            .dica-box { font-size: 0.85rem; }
-            .score-area { font-size: 0.8rem; }
-            .score-area input { font-size: 1.2rem; width: 40px; }
+            .keyboard { grid-template-columns: repeat(auto-fit, minmax(50px, 58px)); }
+            .key-btn { font-size: 1rem; padding: 6px 0; }
+            .dica-box { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <!-- Forca com sidebar à direita -->
-    <div class="gallows-wrapper">
-        <div class="gallows-area">
-            <table class="gallows-table" border="0" cellpadding="0" cellspacing="0">
-                <!-- LINHA 1: TOPO DA FORCA -->
-                <tr>
-                    <td colspan="8" style="width: 126px;"><img src="images/Forca__01.gif" width="126" height="54" name="a10" id="img_a10" style="display: block;"></td>
-                    <td colspan="4" style="width: 131px;"><img src="images/Forca__02.gif" width="131" height="54" name="a9" id="img_a9" style="display: block; position: relative; left: -160px;"></td>
-                </tr>
-                <!-- LINHA 2 -->
-                <tr>
-                    <td rowspan="5" style="width: 69px; height: 192px;"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11" style="display: block;"></td>
-                    <td colspan="2" style="width: 48px; height: 94px;"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12" style="display: block;"></td>
-                    <td colspan="4" style="width: 101px; height: 94px;"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="display: block; position: relative; left: -7px;"></td>
-                    <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__06.gif" width="39" height="110" style="display: block;"></td>
-                </tr>
-                <!-- LINHA 3 -->
-                <tr>
-                    <td colspan="3" rowspan="2" style="width: 57px; height: 40px;"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="display: block; position: relative; left: 8px;"></td>
-                    <td colspan="3" style="width: 92px; height: 16px;"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2" style="display: block;"></td>
-                </tr>
-                <!-- LINHA 4 -->
-                <tr>
-                    <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 5px;"></td>
-                    <td colspan="2" rowspan="2" style="width: 68px; height: 58px;"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="display: block; position: relative; left: -35px;"></td>
-                </tr>
-                <!-- LINHA 5 -->
-                <tr>
-                    <td colspan="3" rowspan="3" style="width: 57px; height: 108px;"><img src="images/Forca__11.gif" width="57" height="108" style="display: block;"></td>
-                </tr>
-                <!-- LINHA 6 -->
-                <tr>
-                    <td colspan="2" rowspan="2" style="width: 68px; height: 74px;"><img src="images/Forca__12.gif" width="68" height="74" style="display: block;"></td>
-                </tr>
-                <!-- LINHA 7 - CORPO (Forca_14) -->
-                <tr>
-                    <td rowspan="3" style="width: 69px; height: 160px;"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="display: block; position: relative; top: -3px;"></td>
-                    <td colspan="2" style="width: 63px; height: 50px;"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="display: block; position: relative; top: 2px;"></td>
-                </tr>
-                <!-- LINHA 8 - PERNAS -->
-                <tr>
-                    <td rowspan="2" style="width: 23px; height: 110px;"><img src="images/Forca__15.gif" width="23" height="110" style="display: block;"></td>
-                    <td colspan="3" style="width: 68px; height: 91px;"><img src="images/Forca__16.gif" width="68" height="91" name="a7" id="img_a7" style="display: block; position: relative; top: -14px; left: 3px;"></td>
-                    <td colspan="2" style="width: 58px; height: 91px;"><img src="images/Forca__17.gif" width="58" height="91" name="a8" id="img_a8" style="display: block; position: relative; top: -14px; left: 3px;"></td>
-                    <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__18.gif" width="39" height="110" style="display: block;"></td>
-                </tr>
-                <!-- LINHA 9 -->
-                <tr>
-                    <td colspan="5" style="width: 126px; height: 19px;"><img src="images/Forca__19.gif" width="126" height="19" style="display: block;"></td>
-                </tr>
-            </table>
-        </div>
-        
-        <!-- Sidebar: marcador e botão ao lado da forca -->
-        <div class="forca-sidebar">
-            <div class="score-area">
-                <div class="score-item">
-                    <span>🏆</span>
-                    <input type="text" name="score" id="scoreInput" value="0" readonly>
-                </div>
-                <div class="score-item">
-                    <span>💀</span>
-                    <input type="text" name="lives" id="livesInput" value="0" readonly>
-                </div>
-                <div class="score-item">
-                    <span>⏱️</span>
-                    <div class="timer-area">
-                        <div id="iTempo" class="timer-fill"></div>
-                    </div>
+    <!-- Área da forca com marcador e botão flutuantes DENTRO dela -->
+    <div class="gallows-area">
+        <!-- Marcador flutuante dentro da área da forca -->
+        <div class="score-overlay">
+            <div class="score-item">
+                <span>🏆</span>
+                <input type="text" name="score" id="scoreInput" value="0" readonly>
+            </div>
+            <div class="score-item">
+                <span>💀</span>
+                <input type="text" name="lives" id="livesInput" value="0" readonly>
+            </div>
+            <div class="score-item timer-vertical">
+                <span>⏱️</span>
+                <div class="timer-bar-bg">
+                    <div id="iTempo" class="timer-bar-fill"></div>
                 </div>
             </div>
-            <button class="btn-start" id="startBtn">▶ INICIAR</button>
         </div>
+        
+        <!-- Botão Iniciar dentro da área da forca -->
+        <button class="btn-start-overlay" id="startBtn">▶ INICIAR</button>
+        
+        <!-- Tabela da forca (centralizada, sem sidebar) -->
+        <table class="gallows-table" border="0" cellpadding="0" cellspacing="0">
+            <!-- LINHA 1: TOPO DA FORCA -->
+            <tr>
+                <td colspan="8" style="width: 126px;"><img src="images/Forca__01.gif" width="126" height="54" name="a10" id="img_a10" style="display: block;"></td>
+                <td colspan="4" style="width: 131px;"><img src="images/Forca__02.gif" width="131" height="54" name="a9" id="img_a9" style="display: block; position: relative; left: -160px;"></td>
+            </tr>
+            <!-- LINHA 2 -->
+            <tr>
+                <td rowspan="5" style="width: 69px; height: 192px;"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11" style="display: block;"></td>
+                <td colspan="2" style="width: 48px; height: 94px;"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12" style="display: block;"></td>
+                <td colspan="4" style="width: 101px; height: 94px;"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="display: block; position: relative; left: -7px;"></td>
+                <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__06.gif" width="39" height="110" style="display: block;"></td>
+            </tr>
+            <!-- LINHA 3 -->
+            <tr>
+                <td colspan="3" rowspan="2" style="width: 57px; height: 40px;"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="display: block; position: relative; left: 8px;"></td>
+                <td colspan="3" style="width: 92px; height: 16px;"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2" style="display: block;"></td>
+            </tr>
+            <!-- LINHA 4 -->
+            <tr>
+                <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 5px;"></td>
+                <td colspan="2" rowspan="2" style="width: 68px; height: 58px;"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="display: block; position: relative; left: -35px;"></td>
+            </tr>
+            <!-- LINHA 5 -->
+            <tr>
+                <td colspan="3" rowspan="3" style="width: 57px; height: 108px;"><img src="images/Forca__11.gif" width="57" height="108" style="display: block;"></td>
+            </tr>
+            <!-- LINHA 6 -->
+            <tr>
+                <td colspan="2" rowspan="2" style="width: 68px; height: 74px;"><img src="images/Forca__12.gif" width="68" height="74" style="display: block;"></td>
+            </tr>
+            <!-- LINHA 7 - CORPO (Forca_14) -->
+            <tr>
+                <td rowspan="3" style="width: 69px; height: 160px;"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="display: block; position: relative; top: -3px;"></td>
+                <td colspan="2" style="width: 63px; height: 50px;"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="display: block; position: relative; top: 2px;"></td>
+            </tr>
+            <!-- LINHA 8 - PERNAS -->
+            <tr>
+                <td rowspan="2" style="width: 23px; height: 110px;"><img src="images/Forca__15.gif" width="23" height="110" style="display: block;"></td>
+                <td colspan="3" style="width: 68px; height: 91px;"><img src="images/Forca__16.gif" width="68" height="91" name="a7" id="img_a7" style="display: block; position: relative; top: -14px; left: 3px;"></td>
+                <td colspan="2" style="width: 58px; height: 91px;"><img src="images/Forca__17.gif" width="58" height="91" name="a8" id="img_a8" style="display: block; position: relative; top: -14px; left: 3px;"></td>
+                <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__18.gif" width="39" height="110" style="display: block;"></td>
+            </tr>
+            <!-- LINHA 9 -->
+            <tr>
+                <td colspan="5" style="width: 126px; height: 19px;"><img src="images/Forca__19.gif" width="126" height="19" style="display: block;"></td>
+            </tr>
+        </table>
     </div>
 
     <div class="right-panel">
@@ -378,7 +384,7 @@
     <footer><a href="https://www.mkcomunicacoes.com/">Developed by MKComunicacoes.com</a></footer>
 </div>
 
-<div id="enforcado"><img src="images/Enforcado.gif" width="100" height="200"></div>
+<div class="enforcado-fixed" id="enforcado"><img src="images/Enforcado.gif" width="80" height="160"></div>
 
 <script>
     // ==================== ACENTUAÇÃO ====================
@@ -477,7 +483,7 @@
     function startTimer() {
         stopTimer();
         second = 0;
-        iTempo.style.width = "0%";
+        iTempo.style.height = "0%";
         timerInterval = setInterval(() => {
             if (acabou) {
                 stopTimer();
@@ -504,7 +510,7 @@
             } else {
                 second++;
                 let percent = (second / 119) * 100;
-                iTempo.style.width = Math.round(percent) + "%";
+                iTempo.style.height = percent + "%";
             }
         }, 1000);
     }
@@ -579,7 +585,7 @@
         wordInput.value = "";
         let numX = words.length - 1;
         index = Math.floor(1 + Math.random() * numX);
-        dicaDiv.innerHTML = `<font face='Verdana' size='3' color='#FFFFFF'>${quest[index]}</font>`;
+        dicaDiv.innerHTML = `<font face='Verdana' size='2' color='#FFFFFF'>${quest[index]}</font>`;
         alpha = ["$", "$"];
         alpha_index = 1;
         bravo = ["$", "$"];
@@ -708,14 +714,10 @@
     startBtn.onclick = () => new_word();
     buildKeyboard();
 
+    // Timer vertical: iniciar com altura 0
+    iTempo.style.height = "0%";
+    
     // Estilo do boneco (centralizado)
-    enforcadoDiv.style.position = 'fixed';
-    enforcadoDiv.style.top = '-400px';
-    enforcadoDiv.style.left = '50%';
-    enforcadoDiv.style.transform = 'translateX(-50%)';
-    enforcadoDiv.style.zIndex = '1000';
-    enforcadoDiv.style.pointerEvents = 'none';
-    enforcadoDiv.style.opacity = '0.7';
     enforcadoDiv.style.visibility = 'hidden';
 </script>
 </body>
