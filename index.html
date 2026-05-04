@@ -33,82 +33,12 @@
             overflow-y: auto;
         }
 
-        /* Header compacto - botão ao lado do marcador */
-        .game-header {
+        /* Layout da forca com sidebar à direita */
+        .gallows-wrapper {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
             gap: 8px;
             margin-bottom: 10px;
-            padding: 0 5px;
-            flex-wrap: nowrap;
-        }
-
-        .score-area {
-            background: rgba(0,0,0,0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            text-align: center;
-            font-weight: bold;
-            color: yellow;
-            font-size: 0.8rem;
-            display: flex;
-            gap: 12px;
-            flex-shrink: 0;
-        }
-
-        .score-area input {
-            background: transparent;
-            border: none;
-            color: yellow;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 35px;
-            text-align: center;
-            font-family: monospace;
-        }
-
-        .timer-area {
-            background: yellow;
-            border-radius: 10px;
-            height: 6px;
-            width: 100px;
-            overflow: hidden;
-            align-self: center;
-        }
-
-        .timer-fill {
-            width: 0%;
-            height: 100%;
-            background: black;
-        }
-
-        /* Botão iniciar ao lado - menor e discreto */
-        .btn-start {
-            background: rgba(0,0,100,0.8);
-            color: yellow;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border: 1px solid #00f;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .btn-start:active {
-            background: darkblue;
-            transform: scale(0.97);
-        }
-
-        /* Layout principal: forca + painel direito em coluna */
-        .main-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 8px;
+            align-items: flex-start;
         }
 
         .gallows-area {
@@ -119,6 +49,86 @@
             justify-content: center;
             align-items: center;
             overflow-x: auto;
+            flex: 2;
+        }
+
+        /* Sidebar ao lado da forca */
+        .forca-sidebar {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Marcador vertical ao lado da forca */
+        .score-area {
+            background: rgba(0,0,0,0.3);
+            padding: 8px 6px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: yellow;
+            font-size: 0.7rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .score-item span:first-child {
+            font-size: 1rem;
+        }
+
+        .score-area input {
+            background: transparent;
+            border: none;
+            color: yellow;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 35px;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .timer-area {
+            background: yellow;
+            border-radius: 10px;
+            height: 6px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .timer-fill {
+            width: 0%;
+            height: 100%;
+            background: black;
+        }
+
+        /* Botão iniciar na sidebar */
+        .btn-start {
+            background: rgba(0,0,100,0.8);
+            color: yellow;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 8px 6px;
+            border: 1px solid #00f;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-start:active {
+            background: darkblue;
+            transform: scale(0.97);
         }
 
         .gallows-table {
@@ -148,6 +158,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            margin-bottom: 8px;
         }
 
         /* Pergunta com fonte menor */
@@ -189,7 +200,7 @@
             border-radius: 10px;
         }
 
-        /* Teclado com teclas menores para caber mais na linha */
+        /* Teclado mais compacto - 2 linhas */
         .keyboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(42px, 50px));
@@ -256,16 +267,17 @@
 
         /* Ajustes para telas muito pequenas */
         @media (max-width: 500px) {
-            .score-area { font-size: 0.65rem; padding: 4px 8px; gap: 8px; }
-            .score-area input { font-size: 0.85rem; width: 30px; }
-            .timer-area { width: 70px; }
-            .btn-start { font-size: 0.65rem; padding: 3px 8px; }
+            .score-area { font-size: 0.6rem; padding: 6px 4px; }
+            .score-item span:first-child { font-size: 0.85rem; }
+            .score-area input { font-size: 0.9rem; width: 28px; }
+            .btn-start { font-size: 0.6rem; padding: 6px 4px; }
             .dica-box { font-size: 0.65rem; padding: 6px; }
             .word-box input { font-size: 0.9rem; letter-spacing: 1px; }
             .keyboard { grid-template-columns: repeat(auto-fit, minmax(38px, 45px)); gap: 4px; }
             .key-btn { font-size: 0.95rem; padding: 4px 0; }
             .key-btn.accent { font-size: 0.85rem; }
             .gallows-area { padding: 4px; }
+            .forca-sidebar { flex: 1; }
         }
         
         /* Ajuste para telas maiores (tablets) */
@@ -273,23 +285,15 @@
             .keyboard { grid-template-columns: repeat(auto-fit, minmax(55px, 65px)); }
             .key-btn { font-size: 1.2rem; padding: 8px 0; }
             .dica-box { font-size: 0.85rem; }
+            .score-area { font-size: 0.8rem; }
+            .score-area input { font-size: 1.2rem; width: 40px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <div class="game-header">
-        <div class="score-area">
-            <span>🏆 <input type="text" name="score" id="scoreInput" value="0" readonly></span>
-            <span>💀 <input type="text" name="lives" id="livesInput" value="0" readonly></span>
-            <div class="timer-area">
-                <div id="iTempo" class="timer-fill"></div>
-            </div>
-        </div>
-        <button class="btn-start" id="startBtn">▶ INICIAR</button>
-    </div>
-
-    <div class="main-panel">
+    <!-- Forca com sidebar à direita -->
+    <div class="gallows-wrapper">
         <div class="gallows-area">
             <table class="gallows-table" border="0" cellpadding="0" cellspacing="0">
                 <!-- LINHA 1: TOPO DA FORCA -->
@@ -340,11 +344,33 @@
                 </tr>
             </table>
         </div>
-        <div class="right-panel">
-            <div class="dica-box" id="dica">--- Clique em Iniciar ---</div>
-            <div class="word-box"><input type="text" name="word" id="wordInput" value="--- Clique em Iniciar ---" readonly></div>
-            <div class="tried-box"><input type="text" name="tried" id="triedInput" value="" readonly></div>
+        
+        <!-- Sidebar: marcador e botão ao lado da forca -->
+        <div class="forca-sidebar">
+            <div class="score-area">
+                <div class="score-item">
+                    <span>🏆</span>
+                    <input type="text" name="score" id="scoreInput" value="0" readonly>
+                </div>
+                <div class="score-item">
+                    <span>💀</span>
+                    <input type="text" name="lives" id="livesInput" value="0" readonly>
+                </div>
+                <div class="score-item">
+                    <span>⏱️</span>
+                    <div class="timer-area">
+                        <div id="iTempo" class="timer-fill"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-start" id="startBtn">▶ INICIAR</button>
         </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="dica-box" id="dica">--- Clique em Iniciar ---</div>
+        <div class="word-box"><input type="text" name="word" id="wordInput" value="--- Clique em Iniciar ---" readonly></div>
+        <div class="tried-box"><input type="text" name="tried" id="triedInput" value="" readonly></div>
     </div>
     
     <div class="keyboard" id="keyboard"></div>
