@@ -12,7 +12,7 @@
 
         body {
             margin: 0;
-            padding: 16px;
+            padding: 8px;
             background-color: #FF6600;
             font-family: 'Verdana', 'Segoe UI', sans-serif;
             min-height: 100vh;
@@ -22,51 +22,47 @@
         }
 
         .game-container {
-            max-width: 1200px;
+            max-width: 600px;
             width: 100%;
             background-color: #FF6600;
             border-radius: 20px;
-            padding: 10px;
+            padding: 8px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
 
+        /* Header compacto */
         .game-header {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .logo-area {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .logo-area img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 0 5px;
         }
 
         .score-area {
             background: rgba(0,0,0,0.3);
-            padding: 10px 15px;
-            border-radius: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
             text-align: center;
             font-weight: bold;
             color: yellow;
-            font-size: 1.2rem;
-            white-space: nowrap;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 15px;
         }
 
         .score-area input {
             background: transparent;
             border: none;
             color: yellow;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            width: 50px;
+            width: 40px;
             text-align: center;
             font-family: monospace;
         }
@@ -74,10 +70,9 @@
         .timer-area {
             background: yellow;
             border-radius: 10px;
-            height: 15px;
-            width: 180px;
+            height: 8px;
+            width: 120px;
             overflow: hidden;
-            margin-top: 5px;
         }
 
         .timer-fill {
@@ -86,17 +81,17 @@
             background: black;
         }
 
+        /* Botão iniciar discreto */
         .btn-start {
-            background: blue;
+            background: rgba(0,0,100,0.8);
             color: yellow;
-            font-size: 1.5rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            padding: 12px 24px;
-            border: 2px outset #00f;
-            border-radius: 50px;
+            padding: 6px 12px;
+            border: 1px solid #00f;
+            border-radius: 20px;
             cursor: pointer;
             transition: 0.2s;
-            white-space: nowrap;
         }
 
         .btn-start:active {
@@ -104,22 +99,21 @@
             transform: scale(0.97);
         }
 
+        /* Layout principal: forca + painel direito em coluna */
         .main-panel {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .gallows-area {
-            flex: 1.2;
-            min-width: 280px;
             background: rgba(0,0,0,0.1);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             overflow-x: auto;
         }
 
@@ -147,42 +141,34 @@
         }
 
         .right-panel {
-            flex: 2;
-            min-width: 200px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 8px;
         }
 
         .dica-box {
             background: #ff884d;
-            padding: 15px;
-            border-radius: 20px;
+            padding: 10px;
+            border-radius: 15px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: white;
             word-break: break-word;
         }
 
-        .word-box {
-            text-align: center;
-        }
-
         .word-box input {
             width: 100%;
-            background: transparent;
+            background: rgba(0,0,0,0.2);
             border: none;
             color: yellow;
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: bold;
             text-align: center;
-            letter-spacing: 5px;
+            letter-spacing: 3px;
             font-family: monospace;
-        }
-
-        .tried-box {
-            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
         }
 
         .tried-box input {
@@ -190,29 +176,29 @@
             background: rgba(255,255,255,0.3);
             border: none;
             color: darkgreen;
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
-            padding: 10px;
-            border-radius: 15px;
+            padding: 6px;
+            border-radius: 10px;
         }
 
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(70px, 85px));
+            grid-template-columns: repeat(auto-fit, minmax(55px, 65px));
             justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 5px;
         }
 
         .key-btn {
             background: blue;
             color: yellow;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            padding: 12px 0;
+            padding: 8px 0;
             border: 2px outset #00f;
-            border-radius: 16px;
+            border-radius: 12px;
             cursor: pointer;
             transition: 0.1s;
             text-align: center;
@@ -232,58 +218,52 @@
             background: darkgreen;
         }
 
-        @media (max-width: 700px) {
-            body { padding: 8px; }
-            .game-header { flex-direction: column; align-items: stretch; }
-            .score-area { display: flex; justify-content: space-between; align-items: center; white-space: normal; }
-            .btn-start { width: 100%; text-align: center; }
-            .keyboard { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 8px; }
-            .key-btn { font-size: 1.5rem; padding: 10px 0; }
-            .word-box input { font-size: 1.2rem; letter-spacing: 2px; }
-        }
-
-        /* Boneco que cai - posicionado entre a forca e as letras */
+        /* Boneco que cai */
         #enforcado {
             position: fixed;
             top: -400px;
-            left: 15%;
-            transform: translateX(0);
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
             pointer-events: none;
             transition: top 0.1s linear;
         }
         
         #enforcado img {
-            width: 120px;
+            width: 100px;
             height: auto;
-        }
-
-        @media (min-width: 701px) and (max-width: 1024px) {
-            .keyboard { grid-template-columns: repeat(7, 1fr); }
-            .key-btn { font-size: 1.6rem; }
         }
 
         footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 10px;
+            font-size: 0.6rem;
             color: #990000;
         }
+        
         a {
             color: #990000;
             text-decoration: none;
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 500px) {
+            .score-area { font-size: 0.7rem; padding: 4px 8px; }
+            .score-area input { font-size: 1rem; width: 35px; }
+            .dica-box { font-size: 0.75rem; padding: 8px; }
+            .word-box input { font-size: 1rem; letter-spacing: 2px; }
+            .key-btn { font-size: 1.2rem; padding: 6px 0; min-width: 50px; }
+            .keyboard { grid-template-columns: repeat(auto-fit, minmax(48px, 58px)); gap: 4px; }
+            .gallows-area { padding: 5px; }
         }
     </style>
 </head>
 <body>
 <div class="game-container">
     <div class="game-header">
-        <div class="logo-area">
-            <img src="images/LogoForca.gif" alt="Jogo da Forca" style="max-width: 200px;">
-        </div>
         <div class="score-area">
-            <span>🏆 Pontos: <input type="text" name="score" id="scoreInput" value="0" readonly></span>
-            <span>💀 Erros: <input type="text" name="lives" id="livesInput" value="0" readonly></span>
+            <span>🏆 <input type="text" name="score" id="scoreInput" value="0" readonly></span>
+            <span>💀 <input type="text" name="lives" id="livesInput" value="0" readonly></span>
             <div class="timer-area">
                 <div id="iTempo" class="timer-fill"></div>
             </div>
@@ -303,18 +283,18 @@
                 <tr>
                     <td rowspan="5" style="width: 69px; height: 192px;"><img src="images/Forca__03.gif" width="69" height="192" name="a11" id="img_a11" style="display: block;"></td>
                     <td colspan="2" style="width: 48px; height: 94px;"><img src="images/Forca__04.gif" width="48" height="94" name="a12" id="img_a12" style="display: block;"></td>
-                    <td colspan="4" style="width: 101px; height: 94px;"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="display: block; position: relative; left: -10px;"></td>
+                    <td colspan="4" style="width: 101px; height: 94px;"><img src="images/Forca__05.gif" width="101" height="94" name="a1" id="img_a1" style="display: block; position: relative; left: -7px;"></td>
                     <td rowspan="2" style="width: 39px; height: 110px;"><img src="images/Forca__06.gif" width="39" height="110" style="display: block;"></td>
                 </tr>
-                <!-- LINHA 3 - Forca_07 movido mais para a direita -->
+                <!-- LINHA 3 -->
                 <tr>
                     <td colspan="3" rowspan="2" style="width: 57px; height: 40px;"><img src="images/Forca__07.gif" width="57" height="40" name="a4" id="img_a4" style="display: block; position: relative; left: 8px;"></td>
                     <td colspan="3" style="width: 92px; height: 16px;"><img src="images/Forca__08.gif" width="92" height="16" name="a2" id="img_a2" style="display: block;"></td>
                 </tr>
-                <!-- LINHA 4 - Forca_10 movido mais para a esquerda -->
+                <!-- LINHA 4 -->
                 <tr>
-                    <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 1px;"></td>
-                    <td colspan="2" rowspan="2" style="width: 68px; height: 58px;"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="display: block; position: relative; left: -25px;"></td>
+                    <td colspan="2" rowspan="3" style="width: 63px; height: 82px;"><img src="images/Forca__09.gif" width="63" height="82" name="a3" id="img_a3" style="display: block; position: relative; left: 5px;"></td>
+                    <td colspan="2" rowspan="2" style="width: 68px; height: 58px;"><img src="images/Forca__10.gif" width="68" height="58" name="a5" id="img_a5" style="display: block; position: relative; left: -35px;"></td>
                 </tr>
                 <!-- LINHA 5 -->
                 <tr>
@@ -327,9 +307,9 @@
                 <!-- LINHA 7 - CORPO (Forca_14) -->
                 <tr>
                     <td rowspan="3" style="width: 69px; height: 160px;"><img src="images/Forca__13.gif" width="69" height="160" name="a13" id="img_a13" style="display: block; position: relative; top: -3px;"></td>
-                    <td colspan="2" style="width: 63px; height: 50px;"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="display: block; position: relative; top: 0px;"></td>
+                    <td colspan="2" style="width: 63px; height: 50px;"><img src="images/Forca__14.gif" width="63" height="50" name="a6" id="img_a6" style="display: block; position: relative; top: 2px;"></td>
                 </tr>
-                <!-- LINHA 8 - PERNAS (Forca_16 e Forca_17) subidas mais para juntar com o tronco -->
+                <!-- LINHA 8 - PERNAS -->
                 <tr>
                     <td rowspan="2" style="width: 23px; height: 110px;"><img src="images/Forca__15.gif" width="23" height="110" style="display: block;"></td>
                     <td colspan="3" style="width: 68px; height: 91px;"><img src="images/Forca__16.gif" width="68" height="91" name="a7" id="img_a7" style="display: block; position: relative; top: -14px; left: 3px;"></td>
@@ -346,41 +326,38 @@
             <div class="dica-box" id="dica">--- Clique em Iniciar ---</div>
             <div class="word-box"><input type="text" name="word" id="wordInput" value="--- Clique em Iniciar ---" readonly></div>
             <div class="tried-box"><input type="text" name="tried" id="triedInput" value="" readonly></div>
-            <div class="keyboard" id="keyboard"></div>
         </div>
     </div>
+    
+    <div class="keyboard" id="keyboard"></div>
+    
     <footer><a href="https://www.mkcomunicacoes.com/">Developed by MKComunicacoes.com</a></footer>
 </div>
 
-<div id="enforcado"><img src="images/Enforcado.gif" width="120" height="240"></div>
+<div id="enforcado"><img src="images/Enforcado.gif" width="100" height="200"></div>
 
 <script>
-    // ==================== FUNÇÃO CORRETORA DE ACENTUAÇÃO ====================
+    // ==================== ACENTUAÇÃO ====================
     function corrigirAcentuacao(texto) {
         if (!texto) return texto;
-        
         const substituicoes = {
             'S O': 'SÃO', 'A O': 'ÃO', 'E O': 'ÃO',
             ' S O ': ' SÃO ', ' S O?': ' SÃO?',
             ' A O': ' ÃO', ' E O': ' ÃO',
             'ACERT': 'ACERTOU', 'PARAB NS': 'PARABÉNS',
             'VOC ': 'VOCÊ ', ' N O ': ' NÃO ',
-            ' M S ': ' MÊS ', ' P S ': ' PÉS ',
             'NA O': 'NÃO', 'CORRE O': 'CORREÇÃO',
             'A  O': 'AÇÃO', 'FRA O': 'FRAÇÃO',
             'SELE O': 'SELEÇÃO'
         };
-        
         let corrigido = texto;
         for (let [errado, certo] of Object.entries(substituicoes)) {
             corrigido = corrigido.split(errado).join(certo);
         }
-        
         corrigido = corrigido.replace(/([A-Z]) O/g, '$1ÃO');
         corrigido = corrigido.replace(/([A-Z]) O\?/g, '$1ÃO?');
         corrigido = corrigido.replace(/ O /g, 'ÃO ');
         corrigido = corrigido.replace(/ O$/g, 'ÃO');
-        
         return corrigido;
     }
 
@@ -464,31 +441,14 @@
             }
             if (second >= 120) {
                 stopTimer();
-                if (imgMap.a1) {
-                    imgMap.a1.src = "images/Forca_1_05.gif";
-                    imgMap.a1.style.left = '-10px';
-                }
+                if (imgMap.a1) { imgMap.a1.src = "images/Forca_1_05.gif"; imgMap.a1.style.left = '-5px'; }
                 if (imgMap.a2) imgMap.a2.src = "images/Forca_08.gif";
                 if (imgMap.a3) imgMap.a3.src = "images/Forca_09.gif";
                 if (imgMap.a4) imgMap.a4.src = "images/Forca_07.gif";
-                if (imgMap.a5) {
-                    imgMap.a5.src = "images/Forca_10.gif";
-                    imgMap.a5.style.left = '-35px';
-                }
-                if (imgMap.a6) {
-                    imgMap.a6.src = "images/Forca_14.gif";
-                    imgMap.a6.style.top = '-4px';
-                }
-                if (imgMap.a7) {
-                    imgMap.a7.src = "images/Forca_16.gif";
-                    imgMap.a7.style.top = '-14px';
-                    imgMap.a7.style.left = '3px';
-                }
-                if (imgMap.a8) {
-                    imgMap.a8.src = "images/Forca_17.gif";
-                    imgMap.a8.style.top = '-14px';
-                    imgMap.a8.style.left = '3px';
-                }
+                if (imgMap.a5) { imgMap.a5.src = "images/Forca_10.gif"; imgMap.a5.style.left = '-35px'; }
+                if (imgMap.a6) { imgMap.a6.src = "images/Forca_14.gif"; imgMap.a6.style.top = '-4px'; }
+                if (imgMap.a7) { imgMap.a7.src = "images/Forca_16.gif"; imgMap.a7.style.top = '-14px'; imgMap.a7.style.left = '3px'; }
+                if (imgMap.a8) { imgMap.a8.src = "images/Forca_17.gif"; imgMap.a8.style.top = '-14px'; imgMap.a8.style.left = '3px'; }
                 triedInput.value = "Seu tempo acabou! Clique em Iniciar";
                 wordInput.value = words[index];
                 let newScore = parseInt(scoreInput.value) - 1;
@@ -581,58 +541,20 @@
         bravo = ["$", "$"];
         bravo_index = 1;
 
-        // Reset das imagens com ajustes aplicados
-        if (imgMap.a1) {
-            imgMap.a1.src = "images/Forca__05.gif";
-            imgMap.a1.style.position = 'relative';
-            imgMap.a1.style.left = '-10px';
-        }
+        // Reset das imagens
+        if (imgMap.a1) { imgMap.a1.src = "images/Forca__05.gif"; imgMap.a1.style.left = '-7px'; }
         if (imgMap.a2) imgMap.a2.src = "images/Forca__08.gif";
-        if (imgMap.a3) {
-            imgMap.a3.src = "images/Forca__09.gif";
-            imgMap.a3.style.position = 'relative';
-            imgMap.a3.style.left = '1px';
-        }
-        if (imgMap.a4) {
-            imgMap.a4.src = "images/Forca__07.gif";
-            imgMap.a4.style.position = 'relative';
-            imgMap.a4.style.left = '8px';
-        }
-        if (imgMap.a5) {
-            imgMap.a5.src = "images/Forca__10.gif";
-            imgMap.a5.style.position = 'relative';
-            imgMap.a5.style.left = '-28px';
-        }
-        if (imgMap.a6) {
-            imgMap.a6.src = "images/Forca__14.gif";
-            imgMap.a6.style.position = 'relative';
-            imgMap.a6.style.top = '-2px';
-        }
-        if (imgMap.a7) {
-            imgMap.a7.src = "images/Forca__16.gif";
-            imgMap.a7.style.position = 'relative';
-            imgMap.a7.style.top = '-14px';
-            imgMap.a7.style.left = '3px';
-        }
-        if (imgMap.a8) {
-            imgMap.a8.src = "images/Forca__17.gif";
-            imgMap.a8.style.position = 'relative';
-            imgMap.a8.style.top = '-14px';
-            imgMap.a8.style.left = '3px';
-        }
-        if (imgMap.a9) {
-            imgMap.a9.src = "images/Forca__02.gif";
-            imgMap.a9.style.position = 'relative';
-            imgMap.a9.style.left = '-160px';
-        }
+        if (imgMap.a3) { imgMap.a3.src = "images/Forca__09.gif"; imgMap.a3.style.left = '5px'; }
+        if (imgMap.a4) { imgMap.a4.src = "images/Forca__07.gif"; imgMap.a4.style.left = '8px'; }
+        if (imgMap.a5) { imgMap.a5.src = "images/Forca__10.gif"; imgMap.a5.style.left = '-35px'; }
+        if (imgMap.a6) { imgMap.a6.src = "images/Forca__14.gif"; imgMap.a6.style.top = '2px'; }
+        if (imgMap.a7) { imgMap.a7.src = "images/Forca__16.gif"; imgMap.a7.style.top = '-14px'; imgMap.a7.style.left = '3px'; }
+        if (imgMap.a8) { imgMap.a8.src = "images/Forca__17.gif"; imgMap.a8.style.top = '-14px'; imgMap.a8.style.left = '3px'; }
+        if (imgMap.a9) { imgMap.a9.src = "images/Forca__02.gif"; imgMap.a9.style.left = '-160px'; }
         if (imgMap.a10) imgMap.a10.src = "images/Forca__01.gif";
         if (imgMap.a11) imgMap.a11.src = "images/Forca__03.gif";
         if (imgMap.a12) imgMap.a12.src = "images/Forca__04.gif";
-        if (imgMap.a13) {
-            imgMap.a13.src = "images/Forca__13.gif";
-            imgMap.a13.style.position = 'relative';
-            imgMap.a13.style.top = '-3px';
-        }
+        if (imgMap.a13) { imgMap.a13.src = "images/Forca__13.gif"; imgMap.a13.style.top = '-3px'; }
 
         second = 0;
         acabou = false;
@@ -678,48 +600,14 @@
                 alpha[alpha_index] = letter;
             } else {
                 failnum++;
-                if (failnum == 1) { 
-                    if(imgMap.a1) imgMap.a1.src = "images/Forca_05.gif"; 
-                    if(imgMap.a2) imgMap.a2.src = "images/Forca_08.gif"; 
-                }
-                if (failnum == 2) { 
-                    if(imgMap.a3) imgMap.a3.src = "images/Forca_09.gif"; 
-                }
-                if (failnum == 3) { 
-                    if(imgMap.a4) imgMap.a4.src = "images/Forca_07.gif"; 
-                }
-                if (failnum == 4) { 
-                    if(imgMap.a5) {
-                        imgMap.a5.src = "images/Forca_10.gif";
-                        imgMap.a5.style.left = '-27px';
-                    }
-                }
-                if (failnum == 5) { 
-                    if(imgMap.a6) {
-                        imgMap.a6.src = "images/Forca_14.gif";
-                        imgMap.a6.style.top = '-2px';
-                    }
-                }
-                if (failnum == 6) { 
-                    if(imgMap.a7) {
-                        imgMap.a7.src = "images/Forca_16.gif";
-                        imgMap.a7.style.top = '-14px';
-                        imgMap.a7.style.left = '2px';
-                    }
-                }
-                if (failnum == 7) { 
-                    if(imgMap.a8) {
-                        imgMap.a8.src = "images/Forca_17.gif";
-                        imgMap.a8.style.top = '-14px';
-                        imgMap.a8.style.left = '2px';
-                    }
-                }
-                if (failnum == 8) { 
-                    if(imgMap.a1) {
-                        imgMap.a1.src = "images/Forca_1_05.gif";
-                        imgMap.a1.style.left = '-10px';
-                    }
-                }
+                if (failnum == 1) { if(imgMap.a1) imgMap.a1.src = "images/Forca_05.gif"; if(imgMap.a2) imgMap.a2.src = "images/Forca_08.gif"; }
+                if (failnum == 2) { if(imgMap.a3) imgMap.a3.src = "images/Forca_09.gif"; }
+                if (failnum == 3) { if(imgMap.a4) imgMap.a4.src = "images/Forca_07.gif"; }
+                if (failnum == 4) { if(imgMap.a5) { imgMap.a5.src = "images/Forca_10.gif"; imgMap.a5.style.left = '-35px'; } }
+                if (failnum == 5) { if(imgMap.a6) { imgMap.a6.src = "images/Forca_14.gif"; imgMap.a6.style.top = '-4px'; } }
+                if (failnum == 6) { if(imgMap.a7) { imgMap.a7.src = "images/Forca_16.gif"; imgMap.a7.style.top = '-14px'; imgMap.a7.style.left = '3px'; } }
+                if (failnum == 7) { if(imgMap.a8) { imgMap.a8.src = "images/Forca_17.gif"; imgMap.a8.style.top = '-14px'; imgMap.a8.style.left = '3px'; } }
+                if (failnum == 8) { if(imgMap.a1) { imgMap.a1.src = "images/Forca_1_05.gif"; imgMap.a1.style.left = '-5px'; } }
             }
             livesInput.value = failnum;
             if (failnum == 8) {
@@ -776,7 +664,15 @@
     startBtn.onclick = () => new_word();
     buildKeyboard();
 
-
+    // Estilo do boneco (centralizado)
+    enforcadoDiv.style.position = 'fixed';
+    enforcadoDiv.style.top = '-400px';
+    enforcadoDiv.style.left = '50%';
+    enforcadoDiv.style.transform = 'translateX(-50%)';
+    enforcadoDiv.style.zIndex = '1000';
+    enforcadoDiv.style.pointerEvents = 'none';
+    enforcadoDiv.style.opacity = '0.7';
+    enforcadoDiv.style.visibility = 'hidden';
 </script>
 </body>
 </html>
