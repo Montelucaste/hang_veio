@@ -201,23 +201,41 @@
             border-radius: 8px;
         }
 
-        /* Botão para ativar o teclado */
-        .keyboard-activator {
-            background: rgba(0,0,0,0.6);
-            color: yellow;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 12px;
-            border-radius: 30px;
-            text-align: center;
-            cursor: pointer;
+        /* Teclado virtual */
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 5px;
             margin-top: 8px;
-            border: 1px solid yellow;
         }
 
-        .keyboard-activator:active {
-            background: rgba(0,0,0,0.9);
-            transform: scale(0.98);
+        .key-btn {
+            background: blue;
+            color: yellow;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 10px 0;
+            border: 2px outset #00f;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .key-btn:active {
+            background: darkblue;
+            transform: scale(0.96);
+        }
+        
+        .key-btn.accent {
+            background: darkblue;
+            font-size: 0.8rem;
+        }
+        
+        .key-btn.space {
+            background: darkgreen;
+            grid-column: span 4;
         }
 
         footer {
@@ -232,33 +250,7 @@
             text-decoration: none;
         }
 
-        /* Esconde o input de verdade */
-        .hidden-input {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            opacity: 0;
-            width: 1px;
-            height: 1px;
-        }
-
-        @media (max-width: 480px) {
-            .score-overlay { padding: 8px 5px; gap: 10px; }
-            .score-item { font-size: 0.55rem; }
-            .score-item span:first-child { font-size: 0.85rem; }
-            .score-item input { font-size: 0.9rem; width: 30px; }
-            .timer-bar-bg { width: 18px; height: 80px; }
-            .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; }
-            .dica-box { font-size: 0.6rem; }
-            .keyboard-activator { font-size: 0.7rem; padding: 10px; }
-        }
-        
-        @media (min-width: 700px) {
-            .dica-box { font-size: 0.75rem; }
-            .timer-bar-bg { height: 120px; }
-        }
-        
-        /* Estilo do boneco que cai - agora invisível até precisar */
+        /* Boneco que cai */
         #enforcado {
             position: fixed;
             top: -400px;
@@ -274,6 +266,24 @@
         #enforcado img {
             width: 80px;
             height: auto;
+        }
+
+        @media (max-width: 480px) {
+            .score-overlay { padding: 8px 5px; gap: 10px; }
+            .score-item { font-size: 0.55rem; }
+            .score-item span:first-child { font-size: 0.85rem; }
+            .score-item input { font-size: 0.9rem; width: 30px; }
+            .timer-bar-bg { width: 18px; height: 80px; }
+            .btn-start-overlay { font-size: 0.6rem; padding: 4px 10px; }
+            .dica-box { font-size: 0.6rem; }
+            .key-btn { font-size: 0.7rem; padding: 8px 0; }
+            .key-btn.accent { font-size: 0.65rem; }
+        }
+        
+        @media (min-width: 700px) {
+            .key-btn { font-size: 1rem; padding: 12px 0; }
+            .dica-box { font-size: 0.75rem; }
+            .timer-bar-bg { height: 120px; }
         }
     </style>
 </head>
@@ -318,20 +328,15 @@
         <div class="tried-box"><input type="text" name="tried" id="triedInput" value="" readonly></div>
     </div>
     
-    <!-- Botão para abrir o teclado nativo -->
-    <div class="keyboard-activator" id="keyboardActivatorBtn">📱 Toque aqui e digite uma letra</div>
-    
-    <!-- Campo oculto para capturar o teclado -->
-    <input type="text" id="hiddenInput" class="hidden-input" inputmode="text" autocomplete="off">
+    <div class="keyboard" id="keyboard"></div>
     
     <footer><a href="https://www.mkcomunicacoes.com/">Developed by MKComunicacoes.com</a></footer>
 </div>
 
-<!-- Boneco que cai - agora com id em vez de class -->
 <div id="enforcado"><img src="images/Enforcado.gif" width="80" height="160"></div>
 
 <script>
-    // ==================== COLOQUE SEUS DADOS AQUI ====================
+     // ==================== COLOQUE SEUS DADOS AQUI ====================
    
     const wordsRaw = ["","SEDE","DESPENSA","TRÉPLICA","TRENÓ","CAMALEÃO","EXALTASAMBA","MINIE","CUBA","CORINTHIANS","CHACRINHA","SEGURANÇA","CAPRICÓRNIO","VERDE","VATICANO","ROMEU","IRMÃOS","GRETCHEN","CEBOLINHA","WANDERLÉIA","XORORÓ","SCOOBYDOO","RODOLFO","DUAS","GOLEIRO","DIAMANTE","FRAJOLA","FEITICEIRA","CAMALEÃO","HOLLYWOOD","LARANJA","CEM","MÃE","TEMPERATURA","AMERICANO","GEPETO","DÓLAR","OUTONO","CORDAS","MÃE","FELIPÃO","DUAS","MESTRE","XADREZ","PEDRA","ABEL","SEREIA","NUMERÓLOGA","FRANÇA","PÉROLA","PARAIBA","PARANÁ","JANE","MINEIROS","SEIS","ASCENSORISTA","DOZE","ITÁLIA","MÔNICA","SOCIOLOGIA","MAIO","CACHORRO","AEROMODELISMO","PEDRA","VERMELHA","ESPINAFRE","METALÚRGICO","CLEÓPATRA","OUTONO","QUEIMADA","GOVERNADOR","MATILHA","AMAZÔNIA","COPAS","SAPO","ABÓBORA","CORAÇÃO","QUEIJOS","BALEIA","TOURO","CACHORRO","ZANGÃO","BARBEIRO","CENSO","IEMANJÁ","NATAÇÃO","SETE","INIMIGA","NEGREIROS","HARÉM","VILMA","LEÃO","FÊMUR","DIA","AMEIXA","GATO","ALICE","CARNEIROS","CANTORA","RÉU","REFRIGERANTES","AGOSTO","FUTEBOL","PERNAMBUCO","CEBOLINHA","UVA","CUPIDO","GABRIEL","PRIMAVERA","SÓLIDO","BRASIL","CORUJA","RATINHO","BAIÃO","FRANJINHA","BÊGAMO","TOMATE","SOL","CASCÃO","PIMENTINHA","BAHIA","GOLEIRO","PATETA","PINÓQUIO","ESPANTALHO","HITLER","CHACRINHA","QUIMONO","ESTEPE","CAPELA","MADRI","ÁGUA","LIBRA","SEMPRE","SISTEMA","ADEGA","FLAMENGO","KRYPTON","SANTACATARINA","FINADOS","NORDESTE","RENAS","MÉDICO","TAMBOR","CRÔNICAS","BÍBLIA","VAPOR","GIRASSOL","JACARÉ","SANTIAGO","PARAR","GORILA","RIVELINO","DOENTE","WHASHINGTON","ESPANHA","DOZE","ARGENTINA","NERO","MINERAL","ITÁLIA","MILANÊS","CARPINTEIRO","MARACANÃ","INSTRUMENTO","KAMIKAZES","EMBARCAÇÃO","JAPÃO","SEIVA","ÁRVORE","MONTANHA","ROMA","TÊMISA","VINTE","ONU","PADRE","VITILIGO","CLYDE","MARCO","WOODSTOCK","TERREMOTOS","PAPIRO","ESPANHA","SELOS","FRAÇÃO","MOSCOU","VESÚVIO","PORCOS","CHOCOLATE","ÁFRICA","ÍNDIA","PIRATA","TANGO","PIRACEMA","HITLER","BRASIL","LÍBANO","ARARA","JANGADA","FLORIDA","BAGDÁ","SANSÃO","SNOOPY","SINAGOGA","PEIXE","SIDNEY","CHINA","CARDIOLOGISTA","FLAMENGO","MOISÉS","JIBÓIA","CAVALO","PIAUÍ","HIROSHIMA","ESQUIMÓS","ESCRITORA","LONDRES","DANIEL","QUATRO","IPIRANGA","NENHUM","MORCEGO","AVE","ÁFRICA","FEVEREIRO","SAXOFONE","FIGUEIREDO","CAMUNDONGO","ASTRONOMIA","PÁSCOA","COMA","PÁSSARO","ESTRELA","TIRADENTES","ARQUIMEDES","TROPICAL","ELEVADOR","PODÓLOGO","NORDESTE","MOBRAL","CASABLANCA","SUTRA","LUXEMBURGO","PAUL","HUNOS","LOTUS","OLIVEIRA","ARVORE","JABURU","URUGUAI","SEXTANTE","CINCO","HOLANDA","ANIMAL","SOLO","DETROIT","ROMMEL","BAHIA","SOLIDARIEDADE","ÍNDIA","VIETNÃ","CARDEAIS","AZTECA","BAHIA","ZEUS","MARTE","AFRODITE","PEQUINÊS","MÉDICO","BÂNANO","VINHOS","LOUREIRO","BAUXITA","CAPRINO","CÉLICE","BRASIL","SEMÂNTICA","ECOLOGIA","ETIMOLOGIA","MÃOS","UGANDA","MUÇURANA","CHINESA","GREENWICH","URUGUAI","HOLANDA","MAASTRICHT","IRLANDÊS","ÁFRICA","AUMENTAR","CÓRIA","ZOOGEOGRAFIA","ESPANHOLA","PENSILVÂNIA","NOVA GUINÉ","SENEGAL","BAHIA","CANINO","XENÔNIO","MALTA","FLÓRIDA","EQUADOR","BALEIA","SÃO VICENTE", "ISTAMBUL", "ÁSIA"];
 
@@ -344,8 +349,7 @@
         "EXEMPLO",
         "TESTE",
         "JOGO",
-        "FORCA",
-        "PROGRAMACAO"
+        "FORCA"
         // Adicione suas palavras aqui
     ];
     
@@ -354,8 +358,7 @@
         "Esta é uma palavra de exemplo?",
         "Palavra usada para verificar algo?",
         "O que estamos fazendo aqui?",
-        "Como se chama este jogo?",
-        "O que você está fazendo?"
+        "Como se chama este jogo?"
         // Adicione suas perguntas aqui (mesma ordem das palavras)
     ];
     
@@ -426,8 +429,7 @@
     const iTempo = document.getElementById('iTempo');
     const enforcadoDiv = document.getElementById('enforcado');
     const startBtn = document.getElementById('startBtn');
-    const hiddenInput = document.getElementById('hiddenInput');
-    const keyboardActivatorBtn = document.getElementById('keyboardActivatorBtn');
+    const keyboardDiv = document.getElementById('keyboard');
 
     // ==================== FUNÇÕES DO JOGO ====================
     function scrollit() {
@@ -540,23 +542,6 @@
             scoreInput.value = newScore;
             running = false;
         }
-    }
-
-    function processLetter(letter) {
-        if (!running || acabou) return;
-        
-        // Pega apenas a primeira letra
-        if (letter.length > 1) letter = letter.charAt(0);
-        letter = letter.toUpperCase();
-        
-        // Verifica se é letra válida (A-Z ou Ç ou acentos)
-        const letrasValidas = /^[A-ZÇÃÕÁÉÍÓÚ]$/i;
-        if (!letrasValidas.test(letter)) return;
-        
-        seek(letter);
-        
-        // Limpa o campo para a próxima letra
-        hiddenInput.value = '';
     }
 
     function new_word() {
@@ -709,37 +694,65 @@
         }, 1000);
     }
 
-    // ==================== EVENTOS DO TECLADO NATIVO ====================
-    hiddenInput.addEventListener('input', function(e) {
-        if (!running || acabou) return;
-        const value = e.target.value;
-        if (value.length > 0) {
-            const lastChar = value.charAt(value.length - 1);
-            processLetter(lastChar);
-        }
-    });
-
-    hiddenInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-        }
-    });
-
-    keyboardActivatorBtn.addEventListener('click', function() {
-        if (running && !acabou) {
-            hiddenInput.focus();
-            // Mostra feedback visual
-            keyboardActivatorBtn.style.backgroundColor = "rgba(0,100,0,0.8)";
-            setTimeout(() => {
-                keyboardActivatorBtn.style.backgroundColor = "rgba(0,0,0,0.6)";
-            }, 200);
-        } else {
-            advise("Clique em INICIAR primeiro!");
-        }
-    });
+    function buildKeyboard() {
+        const rows = [
+            ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ç'],
+            ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+        ];
+        
+        keyboardDiv.innerHTML = '';
+        
+        // Primeira linha
+        rows[0].forEach(letra => {
+            const btn = document.createElement('div');
+            btn.className = 'key-btn';
+            btn.textContent = letra;
+            btn.onclick = () => seek(letra);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Segunda linha (com Ç)
+        rows[1].forEach(letra => {
+            const btn = document.createElement('div');
+            btn.className = letra === 'Ç' ? 'key-btn accent' : 'key-btn';
+            btn.textContent = letra;
+            btn.onclick = () => seek(letra);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Acentos
+        const acentos = ['Ã', 'Õ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
+        acentos.forEach(acento => {
+            const btn = document.createElement('div');
+            btn.className = 'key-btn accent';
+            btn.textContent = acento;
+            btn.onclick = () => seek(acento);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Terceira linha
+        rows[2].forEach(letra => {
+            const btn = document.createElement('div');
+            btn.className = 'key-btn';
+            btn.textContent = letra;
+            btn.onclick = () => seek(letra);
+            keyboardDiv.appendChild(btn);
+        });
+        
+        // Botão espaço
+        const spaceBtn = document.createElement('div');
+        spaceBtn.className = 'key-btn space';
+        spaceBtn.textContent = '␣';
+        spaceBtn.onclick = () => seek(' ');
+        keyboardDiv.appendChild(spaceBtn);
+        
+        keyboardDiv.style.gridTemplateColumns = 'repeat(8, 1fr)';
+    }
 
     // ==================== INICIALIZAÇÃO ====================
     startBtn.onclick = () => new_word();
+    buildKeyboard();
     iTempo.style.height = "0%";
     enforcadoDiv.style.visibility = 'hidden';
     
